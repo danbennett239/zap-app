@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import useGeoLocation from './hooks/useGeoLocation';
 
 function App() {
+  const { location } = useGeoLocation();
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +17,9 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Lat: {location?.lat || "No value"}
+          <br></br>
+          Long: {location?.lng || "No value"}
         </a>
       </header>
     </div>
