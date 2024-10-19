@@ -3,7 +3,8 @@ import PhotoUpload from './PhotoUpload';
 import PhotoCapture from './PhotoCapture';
 
 const PhotoOptions = ({ setPhoto }) => {
-  const [option, setOption] = useState(null);  // Manages whether to upload or capture
+  // Manages whether to upload or capture
+  const [option, setOption] = useState(null);
 
   return (
     <div>
