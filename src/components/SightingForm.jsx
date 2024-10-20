@@ -22,18 +22,29 @@ const SightingForm = () => {
       <label>Status: </label>
 
       {/* Add Photo Button */}
-      <div>
-        <button
-          type="button"
-          onClick={() => setShowPhotoOptions(!showPhotoOptions)}
-        >
-          Add Photo
-        </button>
-      </div>
+      {photo ? (
+        <div>
+          <button
+            type='button'
+            onClick={() => setShowPhotoOptions(!showPhotoOptions)}>
+            Change Photo
+          </button>
+        </div>
+      ) : (
+        <div>
+          <button
+            type='button'
+            onClick={() => setShowPhotoOptions(!showPhotoOptions)}
+          >
+            Add Photo
+          </button>
+        </div>
+      )}
+
 
       {/* Show Photo Options (Upload or Camera) */}
       {showPhotoOptions && (
-        <PhotoOptions setPhoto={setPhoto} />
+        <PhotoOptions setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions} />
       )}
 
       {/* Display the captured or uploaded photo */}

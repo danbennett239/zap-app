@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PhotoUpload from './PhotoUpload';
 import PhotoCapture from './PhotoCapture';
 
-const PhotoOptions = ({ setPhoto }) => {
-  // Manages whether to upload or capture
+const PhotoOptions = ({ setPhoto, setShowPhotoOptions }) => {
   const [option, setOption] = useState(null);
 
   return (
@@ -15,8 +14,8 @@ const PhotoOptions = ({ setPhoto }) => {
         </div>
       )}
 
-      {option === 'upload' && <PhotoUpload setPhoto={setPhoto} />}
-      {option === 'camera' && <PhotoCapture setPhoto={setPhoto} />}
+      {option === 'upload' && <PhotoUpload setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions} />}
+      {option === 'camera' && <PhotoCapture setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions} />}
     </div>
   );
 };

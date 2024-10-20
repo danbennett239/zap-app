@@ -1,12 +1,13 @@
 import React from 'react';
 
-const PhotoUpload = ({ setPhoto }) => {
+const PhotoUpload = ({ setPhoto, setShowPhotoOptions }) => {
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPhoto(reader.result);  // Set the photo as base64 string
+        setPhoto(reader.result);
+        setShowPhotoOptions(false);
       };
       reader.readAsDataURL(file);
     }

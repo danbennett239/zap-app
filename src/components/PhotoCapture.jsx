@@ -2,7 +2,7 @@ import React from 'react';
 
 import useMediaDevice from '../hooks/useMediaDevice';
 
-const PhotoCapture = ({ setPhoto }) => {
+const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
   const { videoRef, error: mediaError } = useMediaDevice();
 
   const handleTakePhoto = () => {
@@ -15,6 +15,7 @@ const PhotoCapture = ({ setPhoto }) => {
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     const photoData = canvas.toDataURL('image/png');
     setPhoto(photoData);
+    setShowPhotoOptions(false);
   };
 
   return (
