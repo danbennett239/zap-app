@@ -11,12 +11,6 @@ const SightingForm = () => {
   const [canvasVisible, setCanvasVisible] = useState(false);
   const canvasRef = useRef(null);
 
-  // Function to open photo options and reset canvas visibility
-  const handleOpenPhotoOptions = () => {
-    setCanvasVisible(true);  // Make sure the canvas is visible again
-    setShowPhotoOptions(true);
-  };
-
   const handleToggle = () => {
     setIsChecked(!isChecked);  // Toggle the checkbox state
   };
@@ -25,26 +19,12 @@ const SightingForm = () => {
     <form>
       {/* {error && <p>Error: {error}</p>} */}
       <label>Status: </label>
-
-      {/* Add Photo Button */}
-      {photo ? (
-        <div>
-          <button
-            type='button'
-            onClick={() => setShowPhotoOptions(!showPhotoOptions)}>
-            Change Photo
-          </button>
-        </div>
-      ) : (
-        <div>
-          <button
-            type='button'
-            onClick={() => setShowPhotoOptions(!showPhotoOptions)}
-          >
-            Add Photo
-          </button>
-        </div>
-      )}
+      <button
+        type='button'
+        onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
+      >
+        {photo ? 'Change Photo' : 'Add Photo'}
+      </button>
 
 
       {/* Show Photo Options (Upload or Camera) */}
