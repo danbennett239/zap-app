@@ -58,14 +58,14 @@ const SightingForm = () => {
         </span>
       </label>
 
-      {isChecked && (
+      {!isChecked && (
         <>
           <label> Mortality Type:</label>
           <select>
-            <option value="1"></option>
-            <option value="1"></option>
-            <option value="1"></option>
-            <option value="1"></option>
+            <option value="Fence Death: Electrocution">Fence Death: Electrocution</option>
+            <option value="Fence Death: Caught on non-electrified fence">Fence Death: Caught on non-electrified fence</option>
+            <option value="Road Death">Road Death</option>
+            <option value="Other">Other</option>
           </select>
         </>
       )}
