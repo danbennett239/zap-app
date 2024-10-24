@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
+import MortalitySelect from './MortalitySelect';
 import './SightingForm.css';
 
 const SightingForm = () => {
@@ -10,6 +11,9 @@ const SightingForm = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [canvasVisible, setCanvasVisible] = useState(false);
   const canvasRef = useRef(null);
+
+  const [mortalityType, setMortalityType] = useState('');
+  const [customMortalityType, setCustomMortalityType] = useState('');
 
   const handleToggle = () => {
     setIsChecked(!isChecked);  // Toggle the checkbox state
@@ -59,14 +63,12 @@ const SightingForm = () => {
       </label>
 
       {!isChecked && (
+        <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)}/>
+      )}
+      {mortalityType === 'Other' && (
         <>
-          <label> Mortality Type:</label>
-          <select>
-            <option value="Fence Death: Electrocution">Fence Death: Electrocution</option>
-            <option value="Fence Death: Caught on non-electrified fence">Fence Death: Caught on non-electrified fence</option>
-            <option value="Road Death">Road Death</option>
-            <option value="Other">Other</option>
-          </select>
+        <input type="text" placeholder="Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)}/>
+        <p>{customMortalityType}</p>
         </>
       )}
     </form>
