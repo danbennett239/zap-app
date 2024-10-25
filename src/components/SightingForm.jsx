@@ -63,14 +63,28 @@ const SightingForm = () => {
       </label>
 
       {!isChecked && (
-        <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)}/>
+        <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)} />
       )}
+
       {mortalityType === 'Other' && (
         <>
-        <input type="text" placeholder="Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)}/>
-        <p>{customMortalityType}</p>
+          <input type="text" placeholder="Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)} />
+          <p>{customMortalityType}</p>
         </>
       )}
+
+      {(mortalityType === 'Fence Death: Electrocution' || mortalityType === 'Fence Death: Caught on non-electrified fence') && (
+        <>
+          <input type="text" placeholder="Fence Type" />
+        </>
+      )}
+
+      {mortalityType === 'Road Death' && (
+        <>
+          <input type="text" placeholder="Road Type" />
+        </>
+      )}
+
     </form>
   );
 }

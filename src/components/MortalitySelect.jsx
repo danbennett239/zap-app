@@ -6,6 +6,7 @@ const MortalitySelect = ({ value, onChange }) => {
     <>
       <label>Mortality Type:</label>
       <select value={value} onChange={onChange}>
+      <option value="" disabled>Select Mortality Type</option>
         {MORTALITY_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
