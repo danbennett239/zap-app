@@ -15,8 +15,18 @@ const SightingForm = () => {
   const [roadType, setRoadType] = useState('');
   const [additionalNotes, setAdditionalNotes] = useState('');
 
+  const resetMortalityFields = () => {
+    setMortalityType('');
+    setCustomMortalityType('');
+    setFenceType('');
+    setRoadType('');
+  };
+
   const handleToggle = () => {
     setIsChecked(!isChecked);  // Toggle the checkbox state
+    if (!isChecked) {
+      resetMortalityFields();
+    }
   };
 
   const handleSubmit = (e) => {
@@ -42,7 +52,6 @@ const SightingForm = () => {
   return (
     <form>
       {error && <p>Error: {error}</p>}
-      <label>Status: </label>
       <button
         type='button'
         onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
