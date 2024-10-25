@@ -1,46 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useMediaDevice from '../hooks/useMediaDevice';
 
-const PhotoCapture = ({ setPhoto, setShowPhotoOptions, canvasRef, setCanvasVisible }) => {
+const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
   const { videoRef, error: mediaError } = useMediaDevice();
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (!videoRef.current || !canvasRef.current) return;
-
+    const video = videoRef.current;
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
 
-    setCanvasVisible(true);
+    if (!video || !canvas) return;
+
+    const context = canvas.getContext('2d');
+    let animationFrameId;
 
     const drawVideoToCanvas = () => {
-      if (videoRef.current) {
-        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(drawVideoToCanvas);
-      }
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      animationFrameId = requestAnimationFrame(drawVideoToCanvas);
     };
 
-    drawVideoToCanvas();
+    const startDrawing = () => {
+      // Start drawing frames to the canvas
+      drawVideoToCanvas();
+    };
+
+    if (video.readyState >= 2) {
+      // Video is ready
+      startDrawing();
+    } else {
+      // Wait for the video to be ready
+      video.addEventListener('loadeddata', startDrawing);
+    }
 
     return () => {
-      // Clean up the canvas when the component unmounts
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      // Clean up
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      video.removeEventListener('loadeddata', startDrawing);
+      if (context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
     };
-  }, [videoRef, canvasRef, setCanvasVisible]);
+  }, [videoRef]);
 
   const handleTakePhoto = () => {
-    if (!videoRef.current || !canvasRef.current) return;
+    if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    // Draw the current video frame to the canvas and capture the photo
-    context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-    // Convert the canvas content to a data URL (the captured photo)
     const photoData = canvas.toDataURL('image/png');
-    setPhoto(photoData);  // Store the photo in the parent component
+    setPhoto(photoData); // Pass the photo back to the parent component
 
-    setCanvasVisible(false);
     setShowPhotoOptions(false);
   };
 
@@ -48,7 +56,8 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions, canvasRef, setCanvasVisib
     <div>
       <label>Take a Photo:</label>
       {mediaError && <p>{mediaError}</p>}
-      <video ref={videoRef} autoPlay style={{ display: 'none' }} /> {/* Hide the video element */}
+      <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />
+      <canvas ref={canvasRef} width="300" height="200" />
       <button type="button" onClick={handleTakePhoto}>Capture Photo</button>
     </div>
   );

@@ -9,8 +9,6 @@ const SightingForm = () => {
   const [photo, setPhoto] = useState(null);
   const [showPhotoOptions, setShowPhotoOptions] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [canvasVisible, setCanvasVisible] = useState(false);
-  const canvasRef = useRef(null);
 
   const [mortalityType, setMortalityType] = useState('');
   const [customMortalityType, setCustomMortalityType] = useState('');
@@ -33,19 +31,8 @@ const SightingForm = () => {
 
       {/* Show Photo Options (Upload or Camera) */}
       {showPhotoOptions && (
-        <PhotoOptions setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions} setCanvasVisible={setCanvasVisible} canvasRef={canvasRef} />
+        <PhotoOptions setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions}/>
       )}
-
-      <div>
-        {canvasVisible && <h4>Live Video:</h4>}
-        {/* Render the canvas always, but hide it if a photo is captured */}
-        <canvas
-          ref={canvasRef}
-          width="300"
-          height="200"
-          style={{ display: canvasVisible ? 'inline' : 'none' }}
-        />
-      </div>
 
       {photo && (
         <div>
