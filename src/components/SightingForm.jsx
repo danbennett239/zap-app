@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
 import MortalitySelect from './MortalitySelect';
-import { createSighting } from './SightingForm123.js'
+import { createSighting, listSightings } from '../utils/api/sightingAPI.js'
 import './SightingForm.css';
 
 const SightingForm = () => {

@@ -1,3 +1,6 @@
+<!-- TODO -->
+<!-- Remove PUT -->
+
 <?php
 
 use App\Controllers\SightingController;
@@ -8,9 +11,9 @@ $controller = new SightingController();
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if ($uri === '/sightings' && $requestMethod === 'GET') {
+if ($uri === '/zap-app/api/sightings' && $requestMethod === 'GET') {
     $controller->getSightings($_GET);
-} elseif (preg_match('#^/sightings/(\d+)$#', $uri, $matches) && $requestMethod === 'GET') {
+} elseif (preg_match('#^/zap-app/api/sightings/(\d+)$#', $uri, $matches) && $requestMethod === 'GET') {
     $controller->getSightingById($matches[1]);
 } elseif ($uri === '/zap-app/api/sightings' && $requestMethod === 'POST') {
     $controller->createSighting();
