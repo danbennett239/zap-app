@@ -40,12 +40,12 @@ class SightingModel
                 VALUES (:photo, :latitude, :longitude, :status, :mortality_type, :fence_type, :road_type, :additional_notes)";
     $stmt = $this->db->prepare($sql);
     $stmt->bindParam(':photo', $data['photo']);
-    $stmt->bindParam(':latitude', $data['latitude']);
-    $stmt->bindParam(':longitude', $data['longitude']);
+    $stmt->bindParam(':latitude', $data['location']['latitude']);
+    $stmt->bindParam(':longitude', $data['location']['longitude']);
     $stmt->bindParam(':status', $data['status']);
     $stmt->bindParam(':mortality_type', $data['mortality_type']);
-    $stmt->bindParam(':fence_type', $data['fence_type']);
-    $stmt->bindParam(':road_type', $data['road_type']);
+    $stmt->bindParam(':fence_type', $data['metadata']['fence_type']);
+    $stmt->bindParam(':road_type', $data['metadata']['road_type']);
     $stmt->bindParam(':additional_notes', $data['additional_notes']);
     return $stmt->execute();
   }

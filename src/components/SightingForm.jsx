@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
 import MortalitySelect from './MortalitySelect';
+import { createSighting } from './SightingForm123.js'
 import './SightingForm.css';
 
 const SightingForm = () => {
@@ -29,7 +30,7 @@ const SightingForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Submit the sighting data
     const sightingData = {
@@ -47,6 +48,13 @@ const SightingForm = () => {
       }
     }
     console.log(sightingData);
+
+    try {
+      const createdSighting = await createSighting(sightingData);
+      console.log('Sighting created successfully', createdSighting);
+    } catch (error) {
+      console.log('Error: ', error)
+    }
   }
 
   return (

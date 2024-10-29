@@ -12,7 +12,7 @@ if ($uri === '/sightings' && $requestMethod === 'GET') {
     $controller->getSightings($_GET);
 } elseif (preg_match('#^/sightings/(\d+)$#', $uri, $matches) && $requestMethod === 'GET') {
     $controller->getSightingById($matches[1]);
-} elseif ($uri === '/sightings' && $requestMethod === 'POST') {
+} elseif ($uri === '/zap-app/api/sightings' && $requestMethod === 'POST') {
     $controller->createSighting();
 } elseif (preg_match('#^/sightings/(\d+)$#', $uri, $matches) && $requestMethod === 'PUT') {
     $controller->updateSighting($matches[1]);
