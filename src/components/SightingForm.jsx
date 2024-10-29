@@ -87,21 +87,18 @@ const SightingForm = () => {
       {mortalityType === 'Other' && (
         <>
           <input type="text" placeholder="Enter Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)} />
-          <p>{customMortalityType}</p>
         </>
       )}
 
       {(mortalityType === 'Fence Death: Electrocution' || mortalityType === 'Fence Death: Caught on non-electrified fence') && (
         <>
           <input type="text" placeholder="Enter Fence Type" onChange={(e) => setFenceType(e.target.value)} />
-          <p>{fenceType}</p>
         </>
       )}
 
       {mortalityType === 'Road Death' && (
         <>
           <input type="text" placeholder="Enter Road Type" onChange={(e) => setRoadType(e.target.value)} />
-          <p>{roadType}</p>
         </>
       )}
 
