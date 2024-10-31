@@ -25,10 +25,11 @@ const ListView = () => {
   return (
     <div className="list-view">
       <h2>Recent Sightings</h2>
+      {/* <p>{sightings}</p> */}
       <ul>
         {sightings.map((sighting) => (
           <li key={sighting.id}>
-            <p><strong>Location:</strong> {sighting.location.latitude}, {sighting.location.longitude}</p>
+            <p><strong>Location:</strong> {sighting.latitude}, {sighting.longitude}</p>
             <p><strong>Status:</strong> {sighting.status}</p>
             <p><strong>Mortality Type:</strong> {sighting.mortalityType}</p>
             <p><strong>Notes:</strong> {sighting.additionalNotes}</p>

@@ -22,7 +22,8 @@ class SightingModel
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->bindParam(':status', $status);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sighting = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return ['sightings' => $sighting];
   }
 
   public function getSightingById($id)
@@ -37,18 +38,19 @@ class SightingModel
   public function createSighting($data)
   {
     $sql = "INSERT INTO sightings (photo, latitude, longitude, status, mortality_type, fence_type, road_type, additional_notes)
-                VALUES (:photo, :latitude, :longitude, :status, :mortality_type, :fence_type, :road_type, :additional_notes)";
+                  VALUES (:photo, :latitude, :longitude, :status, :mortality_type, :fence_type, :road_type, :additional_notes)";
     $stmt = $this->db->prepare($sql);
     $stmt->bindParam(':photo', $data['photo']);
     $stmt->bindParam(':latitude', $data['location']['latitude']);
     $stmt->bindParam(':longitude', $data['location']['longitude']);
     $stmt->bindParam(':status', $data['status']);
-    $stmt->bindParam(':mortality_type', $data['mortality_type']);
-    $stmt->bindParam(':fence_type', $data['metadata']['fence_type']);
-    $stmt->bindParam(':road_type', $data['metadata']['road_type']);
-    $stmt->bindParam(':additional_notes', $data['additional_notes']);
+    $stmt->bindParam(':mortality_type', $data['mortalityType']);
+    $stmt->bindParam(':fence_type', $data['metadata']['fenceType']);
+    $stmt->bindParam(':road_type', $data['metadata']['roadType']);
+    $stmt->bindParam(':additional_notes', $data['additionalNotes']);
     return $stmt->execute();
   }
+
 
   public function updateSighting($id, $data)
   {

@@ -1,6 +1,3 @@
-<!-- TODO -->
-<!-- Remove PUT -->
-
 <?php
 
 use App\Controllers\SightingController;
