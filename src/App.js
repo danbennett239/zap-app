@@ -6,7 +6,7 @@ import ListView from './components/ListView/ListView';
 import Home from './components/Home/Home';
 
 function App() {
-  const { location } = useGeoLocation();
+  const { location, locationError } = useGeoLocation();
   return (
     <div className="App">
       <ListView></ListView>

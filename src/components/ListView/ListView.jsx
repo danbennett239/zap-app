@@ -16,8 +16,12 @@ import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
 import './ListView.css';
 
+// Pagination
+const [limit, setLimit] = useState(25)
+const [offset, setOffset] = useState(0)
+
 const ListView = () => {
-  const { location, error } = useGeoLocation();
+  const { location, locationError } = useGeoLocation();
   const [sightings, setSightings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortField, setSortField] = useState(null);
@@ -26,7 +30,7 @@ const ListView = () => {
   useEffect(() => {
     const fetchSightings = async () => {
       try {
-        const listSighting = await listSightings(25, 0);
+        const listSighting = await listSightings(limit, offset);
         setSightings(listSighting.sightings);
       } catch (error) {
         console.error("Error fetching sightings:", error);
@@ -36,7 +40,7 @@ const ListView = () => {
     };
 
     fetchSightings();
-  }, []);
+  }, [limit, offset]);
 
   const handleSort = (field) => {
     const direction = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
@@ -61,6 +65,18 @@ const ListView = () => {
     return `${day}/${month}/${year}`;
   };
 
+  const nextPage = () => {
+    setOffset(offset + limit);
+  }
+
+  const previousPage = () => {
+    if (offset - limit >= 0) {
+      setOffset(offset - limit);
+    }
+  }
+
+  const checkLastPage = () => { }
+
 
   if (loading) return <p>Loading...</p>; // Loading gif
 
@@ -72,7 +88,7 @@ const ListView = () => {
           <span onClick={() => handleSort('status')}>Status</span>
           <span onClick={() => handleSort('mortality_type')}>Mortality Type</span>
           <span onClick={() => handleSort('additional_notes')}>Additional Notes</span>
-          {!error && (
+          {!locationError && (
             <span>Distance</span> // Handle sort
           )}
           <span onClick={() => handleSort('created_at')}>Spotted date</span>
@@ -82,14 +98,27 @@ const ListView = () => {
             <span>{sighting.status}</span>
             <span>{sighting.mortality_type}</span>
             <span>{sighting.additional_notes}</span>
-            {!error && (
+            {!locationError && (
               <span>{getDistanceInKm(location.latitude, location.longitude, sighting.latitude, sighting.longitude)} KM</span>
             )}
             <span>{formatDate(sighting.created_at)}</span>
           </div>
         ))}
       </div>
+      <select onChange={(e) => setLimit(e.target.value)}>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+      </select>
+      {/* Maybe grey out instead? */}
+      {offset != 0 &&
+        <button>Previous Page</button>
+      }
+      {/* Check len of return and make sure there is a next page */}
+      <button onClick={nextPage()}>Next Page</button>
     </div>
+
   );
 };
 

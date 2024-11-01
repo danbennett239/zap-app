@@ -6,7 +6,7 @@ import { createSighting } from '../utils/api/sightingAPI.js'
 import './SightingForm.css';
 
 const SightingForm = () => {
-  const { location, error } = useGeoLocation();
+  const { location, locationError } = useGeoLocation();
   const [photo, setPhoto] = useState(null);
   const [showPhotoOptions, setShowPhotoOptions] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -59,7 +59,7 @@ const SightingForm = () => {
 
   return (
     <form>
-      {error && <p>Error: {error}</p>}
+      {locationError && <p>Error: {locationError}</p>}
       <button
         type='button'
         onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
