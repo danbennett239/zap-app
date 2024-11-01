@@ -9,8 +9,8 @@ function App() {
   const { location, locationError } = useGeoLocation();
   return (
     <div className="App">
-      <ListView></ListView>
-      {/* <SightingForm></SightingForm> */}
+      {/* <ListView></ListView> */}
+      <SightingForm></SightingForm>
       {/* <Home></Home> */}
     </div>
   );

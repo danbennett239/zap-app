@@ -16,11 +16,12 @@ import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
 import './ListView.css';
 
-// Pagination
-const [limit, setLimit] = useState(25)
-const [offset, setOffset] = useState(0)
 
 const ListView = () => {
+  // Pagination
+  const [limit, setLimit] = useState(25);
+  const [offset, setOffset] = useState(0);
+
   const { location, locationError } = useGeoLocation();
   const [sightings, setSightings] = useState([]);
   const [loading, setLoading] = useState(true);
