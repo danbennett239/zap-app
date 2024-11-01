@@ -59,6 +59,7 @@ const SightingForm = () => {
 
   return (
     <form>
+      <h2>Report a Sighting</h2>
       {locationError && <p>Error: {locationError}</p>}
       <button
         type='button'

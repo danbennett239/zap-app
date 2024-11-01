@@ -10,8 +10,8 @@ function App() {
   return (
     <div className="App">
       {/* <ListView></ListView> */}
-      <SightingForm></SightingForm>
-      {/* <Home></Home> */}
+      {/* <SightingForm></SightingForm> */}
+      <Home></Home>
     </div>
   );
 }
