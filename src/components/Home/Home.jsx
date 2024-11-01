@@ -20,7 +20,7 @@ const Home = () => {
       //   return <GraphView />;
       case 'list':
       default:
-        // return <ListView />;
+        return <ListView />;
     }
   };
 

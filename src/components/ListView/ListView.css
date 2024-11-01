@@ -1,13 +1,16 @@
+/* Container styling */
 .list-view {
   max-width: 100%;
   padding: 20px;
 }
 
+/* Header styling */
 h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Table styling */
 .list-table {
   display: flex;
   flex-direction: column;
@@ -24,6 +27,7 @@ h2 {
   font-weight: bold;
 }
 
+/* Sortable column headers */
 .list-header span {
   flex: 1;
   cursor: pointer;
@@ -33,6 +37,7 @@ h2 {
   text-decoration: underline;
 }
 
+/* Row styling */
 .list-row {
   font-weight: normal;
 }
@@ -49,16 +54,18 @@ h2 {
   background-color: #e6f7ff;
 }
 
+/* Mobile styling to hide certain columns */
 @media (max-width: 768px) {
-
-  .list-header,
-  .list-row {
-    flex-direction: column;
-    text-align: left;
+  /* Hide Additional Notes and Distance columns */
+  .list-header span:nth-child(3),
+  .list-header span:nth-child(4),
+  .list-row span:nth-child(3),
+  .list-row span:nth-child(4) {
+    display: none;
   }
 
-  .list-header span,
-  .list-row span {
-    width: 100%;
+  /* Ensure the row spans full width on mobile */
+  .list-row {
+    padding: 15px 10px;
   }
 }

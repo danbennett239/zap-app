@@ -117,7 +117,7 @@ const ListView = () => {
         <button>Previous Page</button>
       }
       {/* Check len of return and make sure there is a next page */}
-      <button onClick={nextPage()}>Next Page</button>
+      <button onClick={(e) => nextPage()}>Next Page</button>
     </div>
 
   );
