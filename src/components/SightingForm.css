@@ -90,7 +90,7 @@ input[type="text"], select, textarea {
 }
 
 input:checked+.slider {
-  background-color: green;
+  background-color: #4CAF50;
   /* Background color when checked */
 }
 
