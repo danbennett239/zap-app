@@ -39,6 +39,7 @@ export const listSightings = async (limit = 10, offset = 0) => {
     }
     if (!response.ok) throw new Error('Failed to list sightings');
     const data = await response.json();
+    // await new Promise(resolve => setTimeout(resolve, 2000));
     return data;
   } catch (error) {
     console.error('Error listing sighting', error);

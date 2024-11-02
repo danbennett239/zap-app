@@ -79,7 +79,7 @@ const ListView = () => {
   const checkLastPage = () => { }
 
 
-  if (loading) return <p>Loading...</p>; // Loading gif
+  if (loading) return <img src='../public/loading.gif' alt='Loading...'></img>; 
 
   return (
     <div className="list-view">
@@ -106,6 +106,7 @@ const ListView = () => {
           </div>
         ))}
       </div>
+      {/* Need an ID or a Name */}
       <select onChange={(e) => setLimit(e.target.value)}>
         <option value="25">25</option>
         <option value="50">50</option>
