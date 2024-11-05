@@ -14,13 +14,18 @@ import React, { useEffect, useState } from 'react';
 import useGeoLocation from '../../hooks/useGeoLocation';
 import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
+import SightingPopup from '../SightingPopup/SightingPopup';
 import './ListView.css';
+import { set } from 'react-hook-form';
 
 
 const ListView = () => {
   // Pagination
   const [limit, setLimit] = useState(25);
   const [offset, setOffset] = useState(0);
+
+  const [selectedSightingId, setSelectedSightingId] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { location, locationError } = useGeoLocation();
   const [sightings, setSightings] = useState([]);
@@ -42,6 +47,16 @@ const ListView = () => {
 
     fetchSightings();
   }, [limit, offset]);
+
+  const handleRowClick = (sightingId) => {
+    setSelectedSightingId(sightingId);
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedSightingId(null);
+  };
 
   const handleSort = (field) => {
     const direction = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
@@ -95,7 +110,7 @@ const ListView = () => {
           <span onClick={() => handleSort('created_at')}>Spotted date</span>
         </div>
         {sightings.map((sighting) => (
-          <div className="list-row" key={sighting.id}>
+          <div key={sighting.id} className="list-row" onClick={() => handleRowClick(sighting.id)}>
             <span>{sighting.status}</span>
             <span>{sighting.mortality_type}</span>
             <span>{sighting.additional_notes}</span>
@@ -119,6 +134,10 @@ const ListView = () => {
       }
       {/* Check len of return and make sure there is a next page */}
       <button onClick={(e) => nextPage()}>Next Page</button>
+
+      {isPopupOpen && selectedSightingId && (
+        <SightingPopup id={selectedSightingId} onClose={handleClosePopup} />
+      )}
     </div>
 
   );

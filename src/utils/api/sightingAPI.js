@@ -48,7 +48,7 @@ export const listSightings = async (limit = 10, offset = 0) => {
 
 export const getSighting = async (sightingId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/sighting/${sightingId}`);
+    const response = await fetch(`${API_BASE_URL}/sightings/${sightingId}`);
     if (!response.ok) throw new Error('Failed to list sightings');
     const data = await response.json();
     return data;
