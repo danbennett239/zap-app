@@ -19,7 +19,7 @@ import './ListView.css';
 
 
 
-const ListView = () => {
+const ListView = ({ refreshTrigger }) => {
   // Pagination
   const [limit, setLimit] = useState(25);
   const [offset, setOffset] = useState(0);
@@ -33,6 +33,7 @@ const ListView = () => {
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
 
+  // TODO: api call made twice on initial load
   useEffect(() => {
     const fetchSightings = async () => {
       try {
@@ -44,9 +45,9 @@ const ListView = () => {
         setLoading(false);
       }
     };
-
+    console.log("Making API call");
     fetchSightings();
-  }, [limit, offset]);
+  }, [limit, offset, refreshTrigger]);
 
   const handleRowClick = (sightingId) => {
     setSelectedSightingId(sightingId);

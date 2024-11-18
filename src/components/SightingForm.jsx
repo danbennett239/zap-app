@@ -5,7 +5,7 @@ import MortalitySelect from './MortalitySelect';
 import { createSighting } from '../utils/api/sightingAPI.js'
 import './SightingForm.css';
 
-const SightingForm = ({ onClose }) => {
+const SightingForm = ({ handleSightingCreation }) => {
   const { location, locationError } = useGeoLocation();
   const [photo, setPhoto] = useState(null);
   const [showPhotoOptions, setShowPhotoOptions] = useState(false);
@@ -52,8 +52,8 @@ const SightingForm = ({ onClose }) => {
     try {
       const createdSighting = await createSighting(sightingData);
       console.log('Sighting created successfully', createdSighting);
-      if (onClose) {
-        onClose();
+      if (handleSightingCreation) {
+        handleSightingCreation();
       }
       // TOAST
     } catch (error) {
