@@ -106,7 +106,7 @@ const ListView = ({ refreshTrigger }) => {
           <span onClick={() => handleSort('mortality_type')}>Mortality Type</span>
           <span onClick={() => handleSort('additional_notes')}>Additional Notes</span>
           {!locationError && (
-            <span>Distance</span> // Handle sort
+            <span>Distance</span> // TODO Handle sort
           )}
           <span onClick={() => handleSort('created_at')}>Spotted date</span>
         </div>
@@ -136,14 +136,11 @@ const ListView = ({ refreshTrigger }) => {
       {/* Check len of return and make sure there is a next page */}
       <button onClick={(e) => nextPage()}>Next Page</button>
 
-      {/* {isPopupOpen && selectedSightingId && (
-        <SightingPopup id={selectedSightingId} onClose={handleClosePopup} />
-      )} */}
       {isPopupOpen && selectedSightingId && (
         <div className="modal-overlay" onClick={handleClosePopup}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={handleClosePopup}>X</button>
-            <SightingPopup id={selectedSightingId} onClose={handleClosePopup} />
+            <SightingPopup id={selectedSightingId} />
           </div>
         </div>
       )}
