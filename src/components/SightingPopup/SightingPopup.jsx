@@ -21,14 +21,25 @@ const SightingPopup = ({ id, onClose }) => {
     };
 
     fetchSighting();
-    console.log("Base64 image data:", sighting?.photo);
   }, [id]);
 
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className="popup">
-      <button onClick={onClose}>Close</button>
+      {/*       
+      photo: photo,
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude,
+      },
+      status: isChecked ? 'Alive' : 'Dead',
+      mortalityType: mortalityType === 'Other' ? customMortalityType : mortalityType,
+      additionalNotes: additionalNotes,
+      metadata: {
+        fenceType: fenceType || null,
+        roadType: roadType || null,
+      } */}
       <h3>Sighting Details</h3>
       {sighting.photo ? (
         <img src={sighting.photo} alt="Sighting" style={{ width: '100%', height: 'auto' }} />
@@ -36,6 +47,7 @@ const SightingPopup = ({ id, onClose }) => {
           <p>No image available</p>
           )}
       <p>Mortality Type: {sighting.mortality_type}</p>
+
       {/* Add more details if needed */}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListView from '../ListView/ListView';
 // import MapView from './MapView'; // Example view component
 // import GraphView from './GraphView'; // Example view component
@@ -8,9 +8,24 @@ import './Home.css';
 const Home = () => {
   const [currentView, setCurrentView] = useState('list'); // Default to ListView
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  // Disable scrolling of background content when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  
+    // Clean up the effect when the component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
+  
+
 
   const renderView = () => {
     switch (currentView) {
@@ -42,7 +57,7 @@ const Home = () => {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={closeModal}>X</button>
-            <SightingForm />
+            <SightingForm onClose={closeModal}/>
           </div>
         </div>
       )}

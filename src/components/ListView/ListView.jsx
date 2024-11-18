@@ -16,7 +16,7 @@ import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
 import SightingPopup from '../SightingPopup/SightingPopup';
 import './ListView.css';
-import { set } from 'react-hook-form';
+
 
 
 const ListView = () => {
