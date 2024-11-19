@@ -23,11 +23,11 @@ class SightingModel
     $totalCount = $countStmt->fetch(PDO::FETCH_ASSOC)['totalCount'];
     
     // Query to get paginated sightings
-    $sql = "SELECT * FROM sightings WHERE (:status IS NULL OR status = :status) ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+    $sql = "SELECT * FROM sightings ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
     $stmt = $this->db->prepare($sql);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-    $stmt->bindParam(':status', $status);
+    // $stmt->bindParam(':status', $status);
     $stmt->execute();
     $sighting = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return [
