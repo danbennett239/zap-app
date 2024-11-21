@@ -6,14 +6,44 @@ use App\Models\SightingModel;
 use App\Helpers\ResponseHelper;
 
 class SightingController {
+    // public function getSightings($request) {
+    //     $limit = $request['limit'] ?? 10;
+    //     $offset = $request['offset'] ?? 0;
+    //     $status = $request['status'] ?? null;
+
+    //     $sightingModel = new SightingModel();
+    //     $sightings = $sightingModel->getSightings($limit, $offset, $status);
+
+    //     return ResponseHelper::jsonResponse($sightings);
+    // }
+
     public function getSightings($request) {
-        $limit = $request['limit'] ?? 10;
-        $offset = $request['offset'] ?? 0;
-        $status = $request['status'] ?? null;
+        // Extract parameters from the request with default values
+        $limit = isset($request['limit']) ? (int)$request['limit'] : 10;
+        $offset = isset($request['offset']) ? (int)$request['offset'] : 0;
+        $sortField = $request['sortField'] ?? 'created_at';
+        $sortDirection = isset($request['sortDirection']) && strtolower($request['sortDirection']) === 'asc' ? 'asc' : 'desc';
 
+        // Collect filters from the request
+        $filters = [];
+        foreach ($request as $key => $value) {
+            // Add filters based on supported parameters
+            if (preg_match('/^(id|latitude|longitude|created_at|updated_at|status|mortality_type|fence_type|road_type|additional_notes)_(gt|gte|lt|lte|eq|like)$/', $key)) {
+                $filters[$key] = $value;
+            }
+        }
+
+        // Pass parameters to the model
         $sightingModel = new SightingModel();
-        $sightings = $sightingModel->getSightings($limit, $offset, $status);
+        $sightings = $sightingModel->getSightings([
+            'limit' => $limit,
+            'offset' => $offset,
+            'sortField' => $sortField,
+            'sortDirection' => $sortDirection,
+            'filters' => $filters
+        ]);
 
+        // Return JSON response
         return ResponseHelper::jsonResponse($sightings);
     }
 
