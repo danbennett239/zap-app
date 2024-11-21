@@ -21,8 +21,11 @@ import './ListView.css';
 
 const ListView = ({ refreshTrigger }) => {
   // Pagination
-  const [limit, setLimit] = useState(25);
+  const [limit, setLimit] = useState(5);
   const [offset, setOffset] = useState(0);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [selectedSightingId, setSelectedSightingId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -37,8 +40,10 @@ const ListView = ({ refreshTrigger }) => {
   useEffect(() => {
     const fetchSightings = async () => {
       try {
+        setLoading(true);
         const listSighting = await listSightings(limit, offset);
         setSightings(listSighting.sightings);
+        setTotalPages(Math.ceil(listSighting.totalCount / limit));
       } catch (error) {
         console.error("Error fetching sightings:", error);
       } finally {
@@ -59,12 +64,18 @@ const ListView = ({ refreshTrigger }) => {
     setSelectedSightingId(null);
   };
 
+  // TODO - sorts current page, sort all data
   const handleSort = (field) => {
     const direction = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
     setSortField(field);
     setSortDirection(direction);
 
     const sortedData = [...sightings].sort((a, b) => {
+      if (field === 'distance' && location && !locationError) {
+        const distanceA = getDistanceInKm(location.latitude, location.longitude, a.latitude, a.longitude);
+        const distanceB = getDistanceInKm(location.latitude, location.longitude, b.latitude, b.longitude);
+        return direction === 'asc' ? distanceA - distanceB : distanceB - distanceA;
+      }
       if (a[field] < b[field]) return direction === 'asc' ? -1 : 1;
       if (a[field] > b[field]) return direction === 'asc' ? 1 : -1;
       return 0;
@@ -82,20 +93,27 @@ const ListView = ({ refreshTrigger }) => {
     return `${day}/${month}/${year}`;
   };
 
-  const nextPage = () => {
-    setOffset(offset + limit);
-  }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    setOffset((pageNumber - 1) * limit);
+  };
 
-  const previousPage = () => {
-    if (offset - limit >= 0) {
-      setOffset(offset - limit);
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
     }
-  }
+  };
 
-  const checkLastPage = () => { }
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  // TODO add no sightings available
 
 
-  if (loading) return <img src='../public/loading.gif' alt='Loading...'></img>; 
+  if (loading) return <img src='../public/loading.gif' alt='Loading...'></img>;
 
   return (
     <div className="list-view">
@@ -106,7 +124,7 @@ const ListView = ({ refreshTrigger }) => {
           <span onClick={() => handleSort('mortality_type')}>Mortality Type</span>
           <span onClick={() => handleSort('additional_notes')}>Additional Notes</span>
           {!locationError && (
-            <span>Distance</span> // TODO Handle sort
+            <span onClick={() => handleSort('distance')}>Distance</span>
           )}
           <span onClick={() => handleSort('created_at')}>Spotted date</span>
         </div>
@@ -122,19 +140,41 @@ const ListView = ({ refreshTrigger }) => {
           </div>
         ))}
       </div>
-      {/* Need an ID or a Name */}
-      <select onChange={(e) => setLimit(e.target.value)}>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-      </select>
-      {/* Maybe grey out instead? */}
-      {offset != 0 &&
-        <button>Previous Page</button>
-      }
-      {/* Check len of return and make sure there is a next page */}
-      <button onClick={(e) => nextPage()}>Next Page</button>
+
+      {/* Dropdown to change page size */}
+      <div className="pagination-controls">
+        <label htmlFor="pageSize">Records per page:</label>
+        <select
+          id="pageSize"
+          onChange={(e) => setLimit(Number(e.target.value))}
+          value={limit}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <div className="pagination">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1 || totalPages === 0}>
+          Previous
+        </button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button onClick={handleNextPage} disabled={currentPage === totalPages || totalPages === 0}>
+          Next
+        </button>
+      </div>
+
 
       {isPopupOpen && selectedSightingId && (
         <div className="modal-overlay" onClick={handleClosePopup}>

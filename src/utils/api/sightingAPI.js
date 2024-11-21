@@ -25,7 +25,7 @@ export const createSighting = async (sightingData) => {
 
 export const listSightings = async (limit = 10, offset = 0) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/sightings?limit=10&offset=0`, {
+    const response = await fetch(`${API_BASE_URL}/sightings?limit=${limit}&offset=${offset}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,6 @@ export const listSightings = async (limit = 10, offset = 0) => {
     }
     if (!response.ok) throw new Error('Failed to list sightings');
     const data = await response.json();
-    // await new Promise(resolve => setTimeout(resolve, 2000));
     return data;
   } catch (error) {
     console.error('Error listing sighting', error);

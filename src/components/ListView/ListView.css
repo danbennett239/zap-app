@@ -121,3 +121,94 @@ h2 {
 .close-btn:hover {
   opacity: 0.8;
 }
+
+.list-view {
+  padding: 20px;
+}
+
+.list-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.list-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333; /* Ensures the text is dark and visible */
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff; /* Text remains white on the active button */
+  font-weight: bold;
+  border: 1px solid #007bff;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: #666; /* Slightly lighter text for disabled buttons */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align items vertically */
+  width: 33%; /* Occupy the middle third */
+  margin: 20px auto; /* Center the container */
+  max-width: 400px; /* Limit width for larger screens */
+  min-width: 200px; /* Ensure usability on smaller screens */
+  gap: 10px; /* Space between label and dropdown */
+}
+
+.pagination-controls label {
+  font-size: 1rem; /* Consistent text size */
+  font-weight: bold;
+  margin: 0; /* Remove default margin */
+  line-height: 1.2; /* Ensure consistent line height */
+  display: flex; /* Ensure proper alignment */
+  align-items: center; /* Center text within label */
+}
+
+.pagination-controls select {
+  flex: 1; /* Let the dropdown grow proportionally */
+  padding: 0.4em 0.6em; /* Scalable padding for natural size */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 1rem; /* Match font size with the label */
+  text-align: center; /* Center the text in the dropdown */
+  line-height: 1.2; /* Match line height with label */
+  height: auto; /* Allow natural height adjustment */
+  appearance: none; /* Remove inconsistent browser styles */
+}
+
+.pagination-controls select:hover {
+  background-color: #e6e6e6;
+}
