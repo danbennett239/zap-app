@@ -15,6 +15,7 @@ import useGeoLocation from '../../hooks/useGeoLocation';
 import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
 import SightingPopup from '../SightingPopup/SightingPopup';
+import FilterComponent from '../Filter/FilterComponent';
 import './ListView.css';
 
 
@@ -26,6 +27,8 @@ const ListView = ({ refreshTrigger }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  const [filters, setFilters] = useState({});
 
   const [selectedSightingId, setSelectedSightingId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -41,7 +44,7 @@ const ListView = ({ refreshTrigger }) => {
     const fetchSightings = async () => {
       try {
         setLoading(true);
-        const listSighting = await listSightings(limit, offset);
+        const listSighting = await listSightings(limit, offset, sortField, sortDirection, filters);
         setSightings(listSighting.sightings);
         setTotalPages(Math.ceil(listSighting.totalCount / limit));
       } catch (error) {
@@ -52,7 +55,7 @@ const ListView = ({ refreshTrigger }) => {
     };
     console.log("Making API call");
     fetchSightings();
-  }, [limit, offset, refreshTrigger]);
+  }, [limit, offset, sortField, sortDirection, filters, refreshTrigger]);
 
   const handleRowClick = (sightingId) => {
     setSelectedSightingId(sightingId);
@@ -63,6 +66,10 @@ const ListView = ({ refreshTrigger }) => {
     setIsPopupOpen(false);
     setSelectedSightingId(null);
   };
+
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters);
+  }
 
   // TODO - sorts current page, sort all data
   const handleSort = (field) => {
@@ -118,6 +125,7 @@ const ListView = ({ refreshTrigger }) => {
   return (
     <div className="list-view">
       <h2>Recent Sightings</h2>
+      <FilterComponent onApplyFilters={handleApplyFilters} />
       <div className="list-table">
         <div className="list-header">
           <span onClick={() => handleSort('status')}>Status</span>

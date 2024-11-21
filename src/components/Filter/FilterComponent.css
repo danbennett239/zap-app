@@ -1,0 +1,67 @@
+.filter-component {
+  position: relative;
+  margin: 20px;
+}
+
+.toggle-filter {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.filter-dropdown.open {
+  max-height: 500px;
+  padding: 10px;
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.apply-button,
+.clear-button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.apply-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.clear-button {
+  background-color: #f44336;
+  color: white;
+}
