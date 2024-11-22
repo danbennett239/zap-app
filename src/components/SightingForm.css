@@ -106,6 +106,7 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
+/* TODO this is where the global green button is from  */
 /* Button Styling */
 button {
   background-color: #4CAF50;
@@ -125,7 +126,8 @@ button:hover {
 }
 
 /* Image and Video Styling */
-img, canvas {
+.sighting-form img, 
+.sighting-form canvas {
   display: block;
   margin: 0 auto 20px;
   max-width: 100%;
