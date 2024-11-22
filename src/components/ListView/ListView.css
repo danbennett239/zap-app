@@ -2,6 +2,7 @@
 .list-view {
   max-width: 100%;
   padding: 20px;
+  margin: 0 auto; /* Center the list view on wide screens */
 }
 
 /* Header styling */
@@ -178,12 +179,11 @@ h2 {
 
 .pagination-controls {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Align items vertically */
-  width: 33%; /* Occupy the middle third */
-  margin: 20px auto; /* Center the container */
-  max-width: 400px; /* Limit width for larger screens */
-  min-width: 200px; /* Ensure usability on smaller screens */
+  flex-wrap: wrap; /* Handle small screens */
+  justify-content: center; /* Center the content */
+  align-items: center;
+  margin: 20px auto; /* Center the container vertically */
+  max-width: 90%; /* Ensure usability on narrow devices */
   gap: 10px; /* Space between label and dropdown */
 }
 
@@ -191,23 +191,19 @@ h2 {
   font-size: 1rem; /* Consistent text size */
   font-weight: bold;
   margin: 0; /* Remove default margin */
-  line-height: 1.2; /* Ensure consistent line height */
-  display: flex; /* Ensure proper alignment */
-  align-items: center; /* Center text within label */
+  white-space: nowrap; /* Prevent label from breaking into multiple lines */
 }
 
 .pagination-controls select {
-  flex: 1; /* Let the dropdown grow proportionally */
-  padding: 0.4em 0.6em; /* Scalable padding for natural size */
+  padding: 0.4em 0.6em;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
   font-size: 1rem; /* Match font size with the label */
-  text-align: center; /* Center the text in the dropdown */
-  line-height: 1.2; /* Match line height with label */
-  height: auto; /* Allow natural height adjustment */
-  appearance: none; /* Remove inconsistent browser styles */
+  text-align: center;
+  appearance: none; /* Remove browser-specific dropdown styles */
 }
+
 
 .pagination-controls select:hover {
   background-color: #e6e6e6;

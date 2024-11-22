@@ -4,6 +4,7 @@ import useGeoLocation from './hooks/useGeoLocation';
 import SightingForm from './components/SightingForm'
 import ListView from './components/ListView/ListView';
 import Home from './components/Home/Home';
+import Banner from './components/Banner/Banner';
 
 function App() {
   const { location, locationError } = useGeoLocation();
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       {/* <ListView></ListView> */}
       {/* <SightingForm></SightingForm> */}
+      <Banner></Banner>
       <Home></Home>
     </div>
   );

@@ -118,9 +118,10 @@ const ListView = ({ refreshTrigger }) => {
   };
 
   // TODO add no sightings available
+  // TODO loading gif causing stutters
 
 
-  if (loading) return <img src='../public/loading.gif' alt='Loading...'></img>;
+  // if (loading) return <img src='../public/loading.gif' alt='Loading...'></img>;
 
   return (
     <div className="list-view">

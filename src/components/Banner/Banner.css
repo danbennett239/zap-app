@@ -1,0 +1,50 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between logo and title */
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0; /* Ensure it starts from the left edge */
+  right: 0; /* Ensure it spans the full width */
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.banner-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.banner-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+body {
+  padding-top: 60px; /* Account for the fixed banner height */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .banner-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .banner-title {
+    font-size: 1.2rem;
+  }
+}
