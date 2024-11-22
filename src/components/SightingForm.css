@@ -1,18 +1,5 @@
-.sighting-form * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body Styling */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  padding: 20px;
-}
-
 /* Form Container */
-form {
+.sighting-form form {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -21,20 +8,27 @@ form {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.sighting-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
 /* Title Styling */
-h4 {
+.sighting-form h4 {
   margin-bottom: 10px;
 }
 
 /* Label Styling */
-label {
+.sighting-form label:not(.sighting-form-switch) {
   font-weight: bold;
   margin-bottom: 5px;
   display: block;
 }
 
 /* Text Inputs, Selects, Textareas */
-input[type="text"], select, textarea {
+.sighting-form input[type="text"], 
+.sighting-form select, 
+.sighting-form textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 20px;
@@ -45,20 +39,21 @@ input[type="text"], select, textarea {
 }
 
 /* Switch (Alive/Dead Toggle) */
-.switch {
+.sighting-form-switch {
   position: relative;
   display: inline-block;
   width: 110px; /* Adjusted width for text */
   height: 34px;
+  margin: 20px auto;
 }
 
-.switch input {
+.sighting-form-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.slider {
+.sighting-form-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -77,7 +72,7 @@ input[type="text"], select, textarea {
   /* Text styling */
 }
 
-.slider:before {
+.sighting-form-slider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -88,27 +83,27 @@ input[type="text"], select, textarea {
   transition: .4s;
 }
 
-input:checked+.slider {
+.sighting-form-switch input:checked + .sighting-form-slider {
   background-color: #4CAF50;
   /* Background color when checked */
 }
 
-input:checked+.slider:before {
+.sighting-form-switch input:checked + .sighting-form-slider:before {
   transform: translateX(75px);
   /* Moves the circle to the right */
 }
 
-.slider.round {
+.sighting-form-slider.round {
   border-radius: 34px;
 }
 
-.slider.round:before {
+.sighting-form-slider.round:before {
   border-radius: 50%;
 }
 
 /* TODO this is where the global green button is from  */
 /* Button Styling */
-button {
+.sighting-form button {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -121,9 +116,20 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.sighting-form button:hover {
   background-color: #45a049;
 }
+
+/* Photo Options Button */
+/* .sighting-form .photo-options-button {
+  background-color: #007bff;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.sighting-form .photo-options-button:hover {
+  background-color: #0056b3;
+} */
 
 /* Image and Video Styling */
 .sighting-form img, 
@@ -142,7 +148,7 @@ button:hover {
     gap: 20px;
   }
 
-  .form-row div {
+  .sighting-form .form-row div {
     flex: 1;
   }
 }

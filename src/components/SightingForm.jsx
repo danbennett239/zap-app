@@ -24,7 +24,7 @@ const SightingForm = ({ handleSightingCreation }) => {
   };
 
   const handleToggle = () => {
-    setIsChecked(!isChecked);  // Toggle the checkbox state
+    setIsChecked(!isChecked);
     if (!isChecked) {
       resetMortalityFields();
     }
@@ -32,7 +32,6 @@ const SightingForm = ({ handleSightingCreation }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit the sighting data
     const sightingData = {
       photo: photo,
       location: {
@@ -59,69 +58,77 @@ const SightingForm = ({ handleSightingCreation }) => {
     } catch (error) {
       console.log('Error: ', error);
       // TOAST
-      // Don't close model
+      // Don't close modal
     }
   }
 
   return (
-    <form>
-      <h2>Report a Sighting</h2>
-      {locationError && <p>Error: {locationError}</p>}
-      <button
-        type='button'
-        onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
-      >
-        {photo ? 'Change Photo' : 'Add Photo'}
-      </button>
+    <div className='sighting-form'>
+      <form>
+        <h2>Report a Sighting</h2>
+        {locationError && <p>Error: {locationError}</p>}
+
+        <button
+          type='button'
+          className='photo-options-button'
+          onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
+        >
+          {photo ? 'Change Photo' : 'Add Photo'}
+        </button>
 
 
-      {/* Show Photo Options (Upload or Camera) */}
-      {showPhotoOptions && (
-        <PhotoOptions setPhoto={setPhoto} setShowPhotoOptions={setShowPhotoOptions} />
-      )}
+        {/* Show Photo Options (Upload or Camera) */}
+        {showPhotoOptions && (
+          <PhotoOptions
+            setPhoto={setPhoto}
+            setShowPhotoOptions={setShowPhotoOptions}
+          />
+        )}
 
-      {photo && (
-        <div>
-          <h4>Preview:</h4>
-          {/* Display the captured photo via an img tag */}
-          <img src={photo} alt="Captured" width="300" height="200" />
-        </div>
-      )}
+        {photo && (
+          <div>
+            <h4>Preview:</h4>
+            {/* Display the captured photo via an img tag */}
+            {/* TODO remove width and height - uploaded img need to be scaled here*/}
+            <img src={photo} alt="Captured" width="300" height="200" /> 
+          </div>
+        )}
 
-      <label className="switch">
-        <input type="checkbox" checked={isChecked} onChange={handleToggle} />
-        <span className="slider round">
-          {isChecked ? 'Alive' : 'Dead'}
-        </span>
-      </label>
+        <label className="sighting-form-switch">
+          <input type="checkbox" checked={isChecked} onChange={handleToggle} />
+          <span className="sighting-form-slider round">
+            {isChecked ? 'Alive' : 'Dead'}
+          </span>
+        </label>
 
-      {!isChecked && (
-        <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)} />
-      )}
+        {!isChecked && (
+          <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)} />
+        )}
 
-      {mortalityType === 'Other' && (
-        <>
-          <input type="text" placeholder="Enter Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)} />
-        </>
-      )}
+        {mortalityType === 'Other' && (
+          <>
+            <input type="text" placeholder="Enter Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)} />
+          </>
+        )}
 
-      {(mortalityType === 'Fence Death: Electrocution' || mortalityType === 'Fence Death: Caught on non-electrified fence') && (
-        <>
-          <input type="text" placeholder="Enter Fence Type" onChange={(e) => setFenceType(e.target.value)} />
-        </>
-      )}
+        {(mortalityType === 'Fence Death: Electrocution' || mortalityType === 'Fence Death: Caught on non-electrified fence') && (
+          <>
+            <input type="text" placeholder="Enter Fence Type" onChange={(e) => setFenceType(e.target.value)} />
+          </>
+        )}
 
-      {mortalityType === 'Road Death' && (
-        <>
-          <input type="text" placeholder="Enter Road Type" onChange={(e) => setRoadType(e.target.value)} />
-        </>
-      )}
+        {mortalityType === 'Road Death' && (
+          <>
+            <input type="text" placeholder="Enter Road Type" onChange={(e) => setRoadType(e.target.value)} />
+          </>
+        )}
 
-      <label>Additional Notes:</label>
-      <textarea placeholder='Enter any additional information here' value={additionalNotes} onChange={(e) => setAdditionalNotes(e.target.value)} rows='4' cols='50'></textarea>
+        <label>Additional Notes:</label>
+        <textarea placeholder='Enter any additional information here' value={additionalNotes} onChange={(e) => setAdditionalNotes(e.target.value)} rows='4' cols='50'></textarea>
 
-      <button type='submit' onClick={(e) => handleSubmit(e)}>Submit Sighting</button>
-    </form>
+        <button type='submit' onClick={(e) => handleSubmit(e)}>Submit Sighting</button>
+      </form>
+    </div>
   );
 }
 
