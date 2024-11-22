@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
 import MortalitySelect from './MortalitySelect';
@@ -15,6 +15,8 @@ const SightingForm = ({ handleSightingCreation }) => {
   const [fenceType, setFenceType] = useState('');
   const [roadType, setRoadType] = useState('');
   const [additionalNotes, setAdditionalNotes] = useState('');
+
+  useEffect(() => {console.log('Mounting')}, []);
 
   const resetMortalityFields = () => {
     setMortalityType('');

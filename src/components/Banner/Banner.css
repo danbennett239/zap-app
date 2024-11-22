@@ -1,58 +1,172 @@
+body {
+  padding-top: 60px; /* Adjust this value to match the height of your banner */
+}
+
 .banner {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
-  background-color: #d2b48c; /* Sandy brown background */
-  color: #5a3e2b; /* Dark brown for text */
-  padding: 10px 20px;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
   width: 100%;
+  background-color: #d2b48c; /* Sandy brown background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-/* TODO possibly don't need margin and padding on icon and title */
-.banner-icon {
-  margin: 0; 
-  padding: 0;
+.banner__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.banner__logo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.banner__icon {
   width: 40px;
   height: 40px;
-  margin-right: 10px; /* Space between icon and title */
+  margin-right: 10px;
 }
 
-.banner-title {
-  margin: 0;
-  padding: 0;
+.banner__title {
   font-size: 1.5rem;
   font-weight: bold;
   color: #5a3e2b; /* Matches the text color */
-  text-align: center;
+  margin: 0;
 }
 
-/* Reset the body padding-top in case of interference */
-body {
-  padding-top: 60px; /* Ensure content doesn't overlap with the banner */
+.banner__nav {
+  flex: 1;
+  text-align: right;
 }
 
-/* Mobile Specific Fixes */
+.banner__nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.banner__nav-item {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.banner__nav-link {
+  text-decoration: none;
+  color: #5a3e2b;
+  font-size: 1rem;
+}
+
+.banner__nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Hamburger Menu Button */
+.banner__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.banner__hamburger-icon {
+  width: 25px;
+  height: 3px;
+  background-color: #5a3e2b;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.banner__hamburger-icon::before,
+.banner__hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background-color: #5a3e2b;
+  transition: all 0.3s ease-in-out;
+}
+
+.banner__hamburger-icon::before {
+  transform: translateY(-8px);
+}
+
+.banner__hamburger-icon::after {
+  transform: translateY(8px);
+}
+
+.banner--menu-open .banner__hamburger-icon {
+  background-color: transparent;
+}
+
+.banner--menu-open .banner__hamburger-icon::before {
+  transform: rotate(45deg);
+}
+
+.banner--menu-open .banner__hamburger-icon::after {
+  transform: rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.banner__mobile-nav {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  background-color: #d2b48c;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.banner--menu-open .banner__mobile-nav {
+  display: block;
+}
+
+.banner__mobile-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.banner__mobile-nav-item {
+  border-bottom: 1px solid #5a3e2b;
+}
+
+.banner__mobile-nav-link {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: #5a3e2b;
+  font-size: 1rem;
+}
+
+.banner__mobile-nav-link:hover {
+  background-color: #e6e6e6;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .banner {
-    flex-direction: row; /* Keep icon and title in a row */
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
+  .banner__content {
+    justify-content: center;
   }
 
-  .banner-icon {
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
+  .banner__logo {
+    justify-content: center;
   }
 
-  .banner-title {
-    font-size: 1.2rem; /* Adjust size for smaller screens */
+  .banner__nav {
+    display: none;
+  }
+
+  .banner__hamburger {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 20px;
   }
 }
