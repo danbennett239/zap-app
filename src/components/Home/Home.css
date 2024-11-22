@@ -1,17 +1,17 @@
-.home {
+.home-container {
   position: relative;
 }
 
-.create-sighting-btn {
+.home-create-sighting-btn {
   padding: 10px 15px;
   margin: 20px 0;
 }
 
-.view-switcher {
+.home-view-switcher {
   margin-bottom: 20px;
 }
 
-.modal-overlay {
+.home-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@
 }
 
 /* Modal content */
-.modal-content {
+.home-modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -38,17 +38,17 @@
 }
 
 /* Optional: Add smooth scrolling for better user experience */
-.modal-content::-webkit-scrollbar {
+.home-modal-content::-webkit-scrollbar {
   width: 6px;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
+.home-modal-content::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 4px;
 }
 
 /* Close button */
-.close-btn {
+.home-close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -68,6 +68,6 @@
   opacity: 1;
 }
 
-.close-btn:hover {
+.home-close-btn:hover {
   opacity: 0.8; /* Slight transparency on hover */
 }

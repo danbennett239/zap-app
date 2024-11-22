@@ -46,11 +46,11 @@ const Home = () => {
   };
 
   return (
-    <div className="home">
-        <button className="create-sighting-btn" onClick={openModal}>
+    <div className="home-container">
+        <button className="home-create-sighting-btn" onClick={openModal}>
           Create Sighting
         </button>
-      <div className="view-switcher">
+      <div className="home-view-switcher">
         <button onClick={() => setCurrentView('list')}>List View</button>
         {/* <button onClick={() => setCurrentView('map')}>Map View</button>
         <button onClick={() => setCurrentView('graph')}>Graph View</button> */}
@@ -60,9 +60,9 @@ const Home = () => {
       {renderView()}
 
       {isModalOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeModal}>X</button>
+        <div className="home-modal-overlay" onClick={closeModal}>
+          <div className="home-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="home-close-btn" onClick={closeModal}>X</button>
             <SightingForm handleSightingCreation={handleSightingCreation}/>
           </div>
         </div>
