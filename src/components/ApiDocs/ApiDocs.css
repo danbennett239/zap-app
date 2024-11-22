@@ -1,0 +1,150 @@
+/* ApiDocs.css */
+
+.api-docs {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4efe3; /* Sandy background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #5a3e2b; /* Dark brown text */
+}
+
+.api-docs h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #8c6b4f; /* Muted brown */
+}
+
+.api-docs h2 {
+  font-size: 1.8rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #d2b48c; /* Sandy brown border */
+  padding-bottom: 10px;
+}
+
+.api-docs h3 {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #7f5f3c; /* Darker brown */
+}
+
+.api-docs h4 {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #5a3e2b;
+}
+
+.api-docs p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.api-docs ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.api-docs ul ul {
+  list-style-type: circle;
+  margin-left: 20px;
+}
+
+.api-docs li {
+  margin-bottom: 5px;
+}
+
+.api-docs code {
+  background-color: #fff8e1; /* Light sandy background for code */
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #3e2723; /* Dark brown code text */
+}
+
+.api-docs pre {
+  background-color: #fff8e1;
+  padding: 15px;
+  border-left: 4px solid #d2b48c;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.api-docs pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.api-docs strong {
+  color: #7f5f3c;
+}
+
+.api-docs a {
+  color: #8c6b4f;
+  text-decoration: none;
+}
+
+.api-docs a:hover {
+  text-decoration: underline;
+}
+
+.api-docs section {
+  background-color: rgba(255, 248, 225, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.api-docs .endpoint-method {
+  display: inline-block;
+  background-color: #d2b48c;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.api-docs .endpoint-url {
+  font-size: 1.1rem;
+  color: #3e2723;
+}
+
+.api-docs .base-url {
+  background-color: #fff8e1;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .api-docs {
+    padding: 15px;
+  }
+
+  .api-docs h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .api-docs h2 {
+    font-size: 1.5rem;
+  }
+
+  .api-docs h3 {
+    font-size: 1.3rem;
+  }
+
+  .api-docs h4 {
+    font-size: 1.1rem;
+  }
+
+  .api-docs pre {
+    padding: 10px;
+  }
+}

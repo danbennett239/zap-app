@@ -14,28 +14,6 @@ class SightingModel
     $this->db = (new Database())->getConnection();
   }
 
-  // public function getSightings($limit, $offset, $status)
-  // {
-  //   // Query to get total count of sightings
-  //   $countSql = "SELECT COUNT(*) as totalCount FROM sightings";
-  //   $countStmt = $this->db->prepare($countSql);
-  //   $countStmt->execute();
-  //   $totalCount = $countStmt->fetch(PDO::FETCH_ASSOC)['totalCount'];
-    
-  //   // Query to get paginated sightings
-  //   $sql = "SELECT * FROM sightings ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
-  //   $stmt = $this->db->prepare($sql);
-  //   $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-  //   $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-  //   // $stmt->bindParam(':status', $status);
-  //   $stmt->execute();
-  //   $sighting = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  //   return [
-  //     'sightings' => $sighting,
-  //     'totalCount' => (int)$totalCount
-  //   ];
-  // }
-
   public function getSightings($queryParams)
 {
     // Extract query parameters
