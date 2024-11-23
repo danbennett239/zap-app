@@ -44,6 +44,7 @@ const ListView = ({ refreshTrigger }) => {
     const fetchSightings = async () => {
       try {
         setLoading(true);
+        console.log('Fetching Sighting with Filters', filters);
         const listSighting = await listSightings(limit, offset, sortField, sortDirection, filters);
         setSightings(listSighting.sightings);
         setTotalPages(Math.ceil(listSighting.totalCount / limit));
@@ -68,7 +69,10 @@ const ListView = ({ refreshTrigger }) => {
   };
 
   const handleApplyFilters = (newFilters) => {
+    console.log('Received Filters in ListView', newFilters);
     setFilters(newFilters);
+    setCurrentPage(1);
+    setOffset(0);
   }
 
   // TODO - sorts current page, sort all data
