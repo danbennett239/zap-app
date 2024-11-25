@@ -15,8 +15,14 @@ const SightingForm = ({ handleSightingCreation }) => {
   const [fenceType, setFenceType] = useState('');
   const [roadType, setRoadType] = useState('');
   const [additionalNotes, setAdditionalNotes] = useState('');
+  const [manualLatitude, setManualLatitude] = useState('');
+  const [manualLongitude, setManualLongitude] = useState('');
 
-  useEffect(() => {console.log('Mounting')}, []);
+
+  useEffect(() => {
+    console.log('Location', location.latitude);
+    console.log('Location Error', locationError);
+  }, [isChecked]);
 
   const resetMortalityFields = () => {
     setMortalityType('');
@@ -37,8 +43,8 @@ const SightingForm = ({ handleSightingCreation }) => {
     const sightingData = {
       photo: photo,
       location: {
-        latitude: location.latitude,
-        longitude: location.longitude,
+        latitude: locationError ? manualLatitude : location?.latitude,
+        longitude: locationError ? manualLongitude : location?.longitude,
       },
       status: isChecked ? 'Alive' : 'Dead',
       mortalityType: mortalityType === 'Other' ? customMortalityType : mortalityType,
@@ -68,8 +74,6 @@ const SightingForm = ({ handleSightingCreation }) => {
     <div className='sighting-form'>
       <form>
         <h2>Report a Sighting</h2>
-        {locationError && <p>Error: {locationError}</p>}
-
         <button
           type='button'
           className='photo-options-button'
@@ -122,6 +126,18 @@ const SightingForm = ({ handleSightingCreation }) => {
         {mortalityType === 'Road Death' && (
           <>
             <input type="text" placeholder="Enter Road Type" onChange={(e) => setRoadType(e.target.value)} />
+          </>
+        )}
+
+        {locationError && (
+          <>
+            {/* TODO Add max width for location error and make error red */}
+            <p>Error with location detection: {locationError}</p>
+            <p>Please enter latitude and longitude manually:</p>
+            <label>Latitude:</label>
+            <input type='text' placeholder='Enter Latitude' onChange={(e) => setManualLatitude(e.target.value)}></input>
+            <label>Longitude:</label>
+            <input type='text' placeholder='Enter Longitude' onChange={(e) => setManualLongitude(e.target.value)}></input>
           </>
         )}
 
