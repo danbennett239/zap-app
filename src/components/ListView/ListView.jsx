@@ -58,6 +58,12 @@ const ListView = ({ refreshTrigger }) => {
     fetchSightings();
   }, [limit, offset, sortField, sortDirection, filters, refreshTrigger]);
 
+  const handlePageSizeChange = (newLimit) => {
+    setLimit(newLimit);
+    setCurrentPage(1);
+    setOffset(0);
+  };
+
   const handleRowClick = (sightingId) => {
     setSelectedSightingId(sightingId);
     setIsPopupOpen(true);
@@ -159,7 +165,7 @@ const ListView = ({ refreshTrigger }) => {
         <label htmlFor="pageSize">Records per page:</label>
         <select
           id="pageSize"
-          onChange={(e) => setLimit(Number(e.target.value))}
+          onChange={(e) => handlePageSizeChange(Number(e.target.value))}
           value={limit}
         >
           <option value="5">5</option>

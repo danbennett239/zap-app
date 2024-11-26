@@ -71,9 +71,9 @@ h2 {
   }
 }
 
-
 /* TEMP */
 
+/* Modal styling */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -147,14 +147,19 @@ h2 {
   padding: 10px 0;
 }
 
+/* Updated Pagination Styling */
 .pagination {
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping of buttons on smaller screens */
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px; /* Adjust spacing between buttons */
   margin-top: 20px;
+  padding: 10px; /* Add padding to ensure spacing within the container */
+  overflow-x: auto; /* Enable horizontal scrolling if necessary */
 }
 
+/* Buttons within Pagination */
 .pagination button {
   padding: 5px 10px;
   border: 1px solid #ccc;
@@ -162,6 +167,8 @@ h2 {
   color: #333; /* Ensures the text is dark and visible */
   cursor: pointer;
   border-radius: 5px;
+  min-width: 40px; /* Ensure consistent button size */
+  text-align: center;
 }
 
 .pagination button.active {
@@ -175,6 +182,18 @@ h2 {
   cursor: not-allowed;
   opacity: 0.5;
   color: #666; /* Slightly lighter text for disabled buttons */
+}
+
+/* For Small Screens */
+@media (max-width: 768px) {
+  .pagination {
+    overflow-x: auto; /* Horizontal scrolling for pagination on smaller screens */
+    padding: 10px 0; /* Adjust padding for better spacing */
+  }
+
+  .pagination button {
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+  }
 }
 
 .pagination-controls {
@@ -203,7 +222,6 @@ h2 {
   text-align: center;
   appearance: none; /* Remove browser-specific dropdown styles */
 }
-
 
 .pagination-controls select:hover {
   background-color: #e6e6e6;
