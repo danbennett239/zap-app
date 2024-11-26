@@ -1,0 +1,90 @@
+/* Container styling */
+.about-pangolins-container {
+    padding: 20px;
+    background: linear-gradient(to bottom, #f5e8c7, #e8d8b9); /* Sandy gradient */
+    color: #5a3e2b; /* Dark brown for text */
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+  }
+  
+  /* Title styling */
+  .about-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Section styling */
+  .about-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  /* Text block styling */
+  .about-text {
+    flex: 1;
+    min-width: 300px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  /* Image container styling */
+  .about-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    min-width: 300px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    background: #e6d8b9; /* Light sandy placeholder */
+    border: 1px solid #5a3e2b; /* Dark brown border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5a3e2b; /* Dark brown text */
+    font-size: 1rem;
+    font-style: italic;
+    text-align: center;
+  }
+  
+  /* Sources section */
+  .about-sources {
+    margin-top: 40px;
+  }
+  
+  .about-sources h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .about-sources ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .about-sources li {
+    margin-bottom: 10px;
+  }
+  
+  .about-sources a {
+    color: #5a3e2b;
+    text-decoration: none;
+  }
+  
+  .about-sources a:hover {
+    text-decoration: underline;
+  }
+  
