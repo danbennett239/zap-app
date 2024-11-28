@@ -16,6 +16,7 @@ import { listSightings } from '../../utils/api/sightingAPI';
 import { getDistanceInKm } from '../../utils/ListView';
 import SightingPopup from '../SightingPopup/SightingPopup';
 import FilterComponent from '../Filter/FilterComponent';
+import Pagination from '../Pagination/Pagination';
 import './ListView.css';
 
 
@@ -24,7 +25,6 @@ const ListView = ({ refreshTrigger }) => {
   // Pagination
   const [limit, setLimit] = useState(5);
   const [offset, setOffset] = useState(0);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -159,43 +159,13 @@ const ListView = ({ refreshTrigger }) => {
           </div>
         ))}
       </div>
-      
-
-      {/* Dropdown to change page size */}
-      <div className="pagination-controls">
-        <label htmlFor="pageSize">Records per page:</label>
-        <select
-          id="pageSize"
-          onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-          value={limit}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
-
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1 || totalPages === 0}>
-          Previous
-        </button>
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={currentPage === index + 1 ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button onClick={handleNextPage} disabled={currentPage === totalPages || totalPages === 0}>
-          Next
-        </button>
-      </div>
-
-
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+        pageSize={limit}
+      />
       {isPopupOpen && selectedSightingId && (
         <div className="modal-overlay" onClick={handleClosePopup}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
