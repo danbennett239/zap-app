@@ -7,5 +7,20 @@ module.exports = {
 	ignoreURLParametersMatching: [
 		/^utm_/,
 		/^fbclid$/
-	]
+	],
+	runtimeCaching: [
+		{
+		  urlPattern: ({ url }) => url.pathname === '/zap-app/api/sightings',
+		  handler: 'NetworkOnly',
+		  method: 'POST',
+		  options: {
+			backgroundSync: {
+			  name: 'apiQueue',
+			  options: {
+				maxRetentionTime: 24 * 60, // Retry for up to 24 hours (in minutes)
+			  },
+			},
+		  },
+		},
+	  ],
 };
