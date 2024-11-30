@@ -17,6 +17,7 @@ const CardView = ({ refreshTrigger }) => {
   const [sortDirection, setSortDirection] = useState('asc');
   const [sightings, setSightings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   const { location, locationError } = useGeoLocation();
 
@@ -79,10 +80,15 @@ const CardView = ({ refreshTrigger }) => {
           sightings.map((sighting, index) => (
             <div key={index} className="card">
               <div className="card-photo">
-                {sighting.photo ? (
-                  <img src={sighting.photo} alt={`Sighting ${index + 1}`} />
+                {imageError || !sighting.photo ? (
+                  <div className="placeholder-photo">{imageError ? 'Image error' : 'No image'}</div>
+                  
                 ) : (
-                  <div className="placeholder-photo">No Photo</div>
+                  <img
+                    src={sighting.photo}
+                    alt={`Sighting ${index + 1}`}
+                    onError={(e) => { setImageError(true) }}
+                  />
                 )}
               </div>
               <div className={`card-status ${sighting.status.toLowerCase()}`}>
