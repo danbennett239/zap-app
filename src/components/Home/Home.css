@@ -79,3 +79,24 @@
 .home-close-btn:hover {
   opacity: 0.8; /* Slight transparency on hover */
 }
+
+.home-view-switcher button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.home-view-switcher button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.home-view-switcher button.active-view {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
