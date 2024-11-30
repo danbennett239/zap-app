@@ -2,7 +2,8 @@
 .list-view {
   max-width: 100%;
   padding: 20px;
-  margin: 0 auto; /* Center the list view on wide screens */
+  margin: 0 auto;
+  /* Center the list view on wide screens */
 }
 
 /* Header styling */
@@ -57,6 +58,7 @@ h2 {
 
 /* Mobile styling to hide certain columns */
 @media (max-width: 768px) {
+
   /* Hide Additional Notes and Distance columns */
   .list-header span:nth-child(3),
   .list-header span:nth-child(4),
@@ -70,8 +72,6 @@ h2 {
     padding: 15px 10px;
   }
 }
-
-/* TEMP */
 
 /* Modal styling */
 .modal-overlay {
@@ -145,84 +145,4 @@ h2 {
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
-}
-
-/* Updated Pagination Styling */
-.pagination {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping of buttons on smaller screens */
-  justify-content: center;
-  align-items: center;
-  gap: 5px; /* Adjust spacing between buttons */
-  margin-top: 20px;
-  padding: 10px; /* Add padding to ensure spacing within the container */
-  overflow-x: auto; /* Enable horizontal scrolling if necessary */
-}
-
-/* Buttons within Pagination */
-.pagination button {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  color: #333; /* Ensures the text is dark and visible */
-  cursor: pointer;
-  border-radius: 5px;
-  min-width: 40px; /* Ensure consistent button size */
-  text-align: center;
-}
-
-.pagination button.active {
-  background-color: #007bff;
-  color: #fff; /* Text remains white on the active button */
-  font-weight: bold;
-  border: 1px solid #007bff;
-}
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  color: #666; /* Slightly lighter text for disabled buttons */
-}
-
-/* For Small Screens */
-@media (max-width: 768px) {
-  .pagination {
-    overflow-x: auto; /* Horizontal scrolling for pagination on smaller screens */
-    padding: 10px 0; /* Adjust padding for better spacing */
-  }
-
-  .pagination button {
-    flex-shrink: 0; /* Prevent buttons from shrinking */
-  }
-}
-
-.pagination-controls {
-  display: flex;
-  flex-wrap: wrap; /* Handle small screens */
-  justify-content: center; /* Center the content */
-  align-items: center;
-  margin: 20px auto; /* Center the container vertically */
-  max-width: 90%; /* Ensure usability on narrow devices */
-  gap: 10px; /* Space between label and dropdown */
-}
-
-.pagination-controls label {
-  font-size: 1rem; /* Consistent text size */
-  font-weight: bold;
-  margin: 0; /* Remove default margin */
-  white-space: nowrap; /* Prevent label from breaking into multiple lines */
-}
-
-.pagination-controls select {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  font-size: 1rem; /* Match font size with the label */
-  text-align: center;
-  appearance: none; /* Remove browser-specific dropdown styles */
-}
-
-.pagination-controls select:hover {
-  background-color: #e6e6e6;
 }
