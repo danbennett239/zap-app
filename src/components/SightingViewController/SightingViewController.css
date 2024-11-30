@@ -1,0 +1,30 @@
+.sighting-view-controller .view-buttons button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #d2b48c;
+    color: #5a3e2b;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .sighting-view-controller .view-buttons button:hover {
+    background-color: #c8a678;
+    transform: scale(1.05);
+  }
+  
+  .sighting-view-controller .view-buttons button.active-view {
+    background-color: #a87e5a;
+    color: #fff;
+    transform: none;
+  }
+  
+  .sighting-view-controller .view-buttons button:disabled {
+    background-color: #e6dcc9;
+    color: #7d6b5c;
+    cursor: not-allowed;
+  }
+  
