@@ -26,28 +26,36 @@ const SightingViewController = ({ refreshTrigger }) => {
   const { location, locationError } = useGeoLocation();
 
   // Fetch data from the API
+  const fetchSightings = async () => {
+    try {
+      setLoading(true);
+      const listSighting = await listSightings(
+        limit,
+        offset,
+        sortField,
+        sortDirection,
+        filters
+      );
+      setSightings(listSighting.sightings);
+      setTotalPages(Math.ceil(listSighting.totalCount / limit));
+    } catch (error) {
+      toast.error(`Error fetching sightings: ${error.message || 'Unknown error'}`)
+      console.error('Error fetching sightings:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchSightings = async () => {
-      try {
-        setLoading(true);
-        const listSighting = await listSightings(
-          limit,
-          offset,
-          sortField,
-          sortDirection,
-          filters
-        );
-        setSightings(listSighting.sightings);
-        setTotalPages(Math.ceil(listSighting.totalCount / limit));
-      } catch (error) {
-        toast.error(`Error fetching sightings: ${error.message || 'Unknown error'}`)
-        console.error('Error fetching sightings:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchSightings();
-  }, [limit, offset, sortField, sortDirection, filters, refreshTrigger]);
+  }, [limit, offset, sortField, sortDirection, filters]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setOffset(0);
+    fetchSightings();
+  }, [refreshTrigger]);
+
 
   // Handle pagination size change
   const handlePageSizeChange = (newLimit) => {
