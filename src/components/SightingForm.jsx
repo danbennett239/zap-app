@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
 import MortalitySelect from './MortalitySelect';
@@ -58,15 +59,18 @@ const SightingForm = ({ handleSightingCreation }) => {
 
     try {
       const createdSighting = await createSighting(sightingData);
-      console.log('Sighting created successfully', createdSighting);
-      if (handleSightingCreation) {
-        handleSightingCreation();
+      if (!createdSighting) {
+        toast.error('Invalid response from the server. Please try again.')
+      } else {
+        toast.success('Sighting created successfully!');
+
+        if (handleSightingCreation) {
+          handleSightingCreation();
+        }
       }
-      // TOAST
+
     } catch (error) {
-      console.log('Error: ', error);
-      // TOAST
-      // Don't close modal
+      toast.error('Error creating sighting', error);
     }
   }
 
@@ -96,7 +100,7 @@ const SightingForm = ({ handleSightingCreation }) => {
             <h4>Preview:</h4>
             {/* Display the captured photo via an img tag */}
             {/* TODO remove width and height - uploaded img need to be scaled here*/}
-            <img src={photo} alt="Captured" width="300" height="200" /> 
+            <img src={photo} alt="Captured" width="300" height="200" />
           </div>
         )}
 
