@@ -46,11 +46,13 @@ const SightingPopup = ({ sighting, onClose }) => {
               <span className="info-title">Status:</span>
               <span className="info-value">{sighting?.status || 'N/A'}</span>
             </div>
-            <div className="info-row">
-              <span className="info-title">Mortality Type:</span>
-              <span className="info-value">{sighting?.mortality_type || 'N/A'}</span>
-            </div>
-            {/* Conditionally render optional fields */}
+            {/* Conditionally render fields */}
+            {sighting?.status === 'Dead' && (
+              <div className="info-row">
+                <span className="info-title">Mortality Type:</span>
+                <span className="info-value">{sighting?.mortality_type || 'N/A'}</span>
+              </div>
+            )}
             {sighting?.fence_type && (
               <div className="info-row">
                 <span className="info-title">Fence Type:</span>

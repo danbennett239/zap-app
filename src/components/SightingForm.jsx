@@ -1,157 +1,232 @@
 import React, { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import useGeoLocation from '../hooks/useGeoLocation';
 import PhotoOptions from './PhotoOptions';
 import MortalitySelect from './MortalitySelect';
-import { createSighting } from '../utils/api/sightingAPI.js'
+import { createSighting } from '../utils/api/sightingAPI.js';
+import { sightingValidationSchema } from '../utils/SightingForm.js';
 import './SightingForm.css';
 
 const SightingForm = ({ handleSightingCreation }) => {
   const { location, locationError } = useGeoLocation();
-  const [photo, setPhoto] = useState(null);
   const [showPhotoOptions, setShowPhotoOptions] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [mortalityType, setMortalityType] = useState('');
-  const [customMortalityType, setCustomMortalityType] = useState('');
-  const [fenceType, setFenceType] = useState('');
-  const [roadType, setRoadType] = useState('');
-  const [additionalNotes, setAdditionalNotes] = useState('');
-  const [manualLatitude, setManualLatitude] = useState('');
-  const [manualLongitude, setManualLongitude] = useState('');
 
-
-  useEffect(() => {
-    console.log('Location', location.latitude);
-    console.log('Location Error', locationError);
-  }, [isChecked]);
-
-  const resetMortalityFields = () => {
-    setMortalityType('');
-    setCustomMortalityType('');
-    setFenceType('');
-    setRoadType('');
-  };
-
-  const handleToggle = () => {
-    setIsChecked(!isChecked);
-    if (!isChecked) {
-      resetMortalityFields();
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const sightingData = {
-      photo: photo,
+  // Initialize Formik
+  const formik = useFormik({
+    initialValues: {
+      photo: null,
+      status: 'Dead',
+      isChecked: false,
+      mortalityType: '',
+      customMortalityType: '',
+      fenceType: '',
+      roadType: '',
+      additionalNotes: '',
       location: {
-        latitude: locationError ? manualLatitude : location?.latitude,
-        longitude: locationError ? manualLongitude : location?.longitude,
+        latitude: '',
+        longitude: '',
       },
-      status: isChecked ? 'Alive' : 'Dead',
-      mortalityType: mortalityType === 'Other' ? customMortalityType : mortalityType,
-      additionalNotes: additionalNotes,
-      metadata: {
-        fenceType: fenceType || null,
-        roadType: roadType || null,
-      }
-    }
-    console.log(sightingData);
+      locationError: locationError,
+    },
+    validationSchema: sightingValidationSchema,
+    onSubmit: async (values) => {
+      const sightingData = {
+        photo: values.photo,
+        location: {
+          latitude: locationError ? values.location.latitude : location?.latitude,
+          longitude: locationError ? values.location.longitude : location?.longitude,
+        },
+        status: values.isChecked ? 'Alive' : 'Dead',
+        mortalityType:
+          values.mortalityType === 'Other' ? values.customMortalityType : values.mortalityType,
+        additionalNotes: values.additionalNotes,
+        metadata: {
+          fenceType: values.fenceType || null,
+          roadType: values.roadType || null,
+        },
+      };
 
-    try {
-      const createdSighting = await createSighting(sightingData);
-      if (!createdSighting) {
-        toast.error('Invalid response from the server. Please try again.')
-      } else {
-        toast.success('Sighting created successfully!');
+      try {
+        const createdSighting = await createSighting(sightingData);
+        if (!createdSighting) {
+          toast.error('Invalid response from the server. Please try again.');
+        } else {
+          toast.success('Sighting created successfully!');
 
-        if (handleSightingCreation) {
-          handleSightingCreation();
+          if (handleSightingCreation) {
+            handleSightingCreation();
+          }
         }
+      } catch (error) {
+        toast.error(`Error creating sighting: ${error.message}`);
       }
+    },
+  });
 
-    } catch (error) {
-      toast.error('Error creating sighting', error);
+  // Handle toggle for Alive/Dead status
+  const handleToggle = () => {
+    const newIsChecked = !formik.values.isChecked;
+    formik.setFieldValue('isChecked', newIsChecked);
+    const newStatus = newIsChecked ? 'Alive' : 'Dead';
+    formik.setFieldValue('status', newStatus);
+    
+    if (newIsChecked) {
+      // If switched to 'Alive', reset mortality-related fields
+      formik.setFieldValue('mortalityType', '');
+      formik.setFieldValue('customMortalityType', '');
+      formik.setFieldValue('fenceType', '');
+      formik.setFieldValue('roadType', '');
     }
-  }
+  };
+
+  // Handle photo selection from PhotoOptions component
+  const handlePhotoSelect = (photo) => {
+    formik.setFieldValue('photo', photo);
+    console.log("PhotoT", photo.data);
+  };
 
   return (
-    <div className='sighting-form'>
-      <form>
+    <div className="sighting-form">
+      <form onSubmit={formik.handleSubmit}>
         <h2>Report a Sighting</h2>
         <button
-          type='button'
-          className='photo-options-button'
-          onClick={() => { setShowPhotoOptions(!showPhotoOptions) }}
+          type="button"
+          className="photo-options-button"
+          onClick={() => {
+            setShowPhotoOptions(!showPhotoOptions);
+          }}
         >
-          {photo ? 'Change Photo' : 'Add Photo'}
+          {formik.values.photo ? 'Change Photo' : 'Add Photo'}
         </button>
-
 
         {/* Show Photo Options (Upload or Camera) */}
         {showPhotoOptions && (
           <PhotoOptions
-            setPhoto={setPhoto}
+            setPhoto={handlePhotoSelect}
             setShowPhotoOptions={setShowPhotoOptions}
           />
         )}
 
-        {photo && (
+        {formik.values.photo && (
           <div>
             <h4>Preview:</h4>
-            {/* Display the captured photo via an img tag */}
-            {/* TODO remove width and height - uploaded img need to be scaled here*/}
-            <img src={photo} alt="Captured" width="300" height="200" />
+            <img src={formik.values.photo} alt="Captured" width="300" height="200" />
           </div>
+        )}
+        {formik.touched.photo && formik.errors.photo && (
+          <div className="error">{formik.errors.photo}</div>
         )}
 
         <label className="sighting-form-switch">
-          <input type="checkbox" checked={isChecked} onChange={handleToggle} />
+          <input
+            type="checkbox"
+            checked={formik.values.isChecked}
+            onChange={handleToggle}
+          />
           <span className="sighting-form-slider round">
-            {isChecked ? 'Alive' : 'Dead'}
+            {formik.values.isChecked ? 'Alive' : 'Dead'}
           </span>
         </label>
 
-        {!isChecked && (
-          <MortalitySelect value={mortalityType} onChange={(e) => setMortalityType(e.target.value)} />
-        )}
-
-        {mortalityType === 'Other' && (
+        {!formik.values.isChecked && (
           <>
-            <input type="text" placeholder="Enter Mortality Type" onChange={(e) => setCustomMortalityType(e.target.value)} />
+            <MortalitySelect
+              value={formik.values.mortalityType}
+              onChange={(e) => formik.setFieldValue('mortalityType', e.target.value)}
+            />
+            {formik.touched.mortalityType && formik.errors.mortalityType && (
+              <div className="error">{formik.errors.mortalityType}</div>
+            )}
           </>
         )}
 
-        {(mortalityType === 'Fence Death: Electrocution' || mortalityType === 'Fence Death: Caught on non-electrified fence') && (
+        {formik.values.mortalityType === 'Other' && (
           <>
-            <input type="text" placeholder="Enter Fence Type" onChange={(e) => setFenceType(e.target.value)} />
+            <input
+              type="text"
+              placeholder="Enter Mortality Type"
+              name="customMortalityType"
+              value={formik.values.customMortalityType}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.customMortalityType && formik.errors.customMortalityType && (
+              <div className="error">{formik.errors.customMortalityType}</div>
+            )}
           </>
         )}
 
-        {mortalityType === 'Road Death' && (
+        {(formik.values.mortalityType === 'Fence Death: Electrocution' ||
+          formik.values.mortalityType === 'Fence Death: Caught on non-electrified fence') && (
           <>
-            <input type="text" placeholder="Enter Road Type" onChange={(e) => setRoadType(e.target.value)} />
+            <input
+              type="text"
+              placeholder="Enter Fence Type"
+              name="fenceType"
+              value={formik.values.fenceType}
+              onChange={formik.handleChange}
+            />
+          </>
+        )}
+
+        {formik.values.mortalityType === 'Road Death' && (
+          <>
+            <input
+              type="text"
+              placeholder="Enter Road Type"
+              name="roadType"
+              value={formik.values.roadType}
+              onChange={formik.handleChange}
+            />
           </>
         )}
 
         {locationError && (
           <>
-            {/* TODO Add max width for location error and make error red */}
-            <p>Error with location detection: {locationError}</p>
+            <p className="error">Error with location detection: {locationError}</p>
             <p>Please enter latitude and longitude manually:</p>
             <label>Latitude:</label>
-            <input type='text' placeholder='Enter Latitude' onChange={(e) => setManualLatitude(e.target.value)}></input>
+            <input
+              type="text"
+              placeholder="Enter Latitude"
+              name="location.latitude"
+              value={formik.values.location.latitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.location?.latitude && formik.errors.location?.latitude && (
+              <div className="error">{formik.errors.location.latitude}</div>
+            )}
             <label>Longitude:</label>
-            <input type='text' placeholder='Enter Longitude' onChange={(e) => setManualLongitude(e.target.value)}></input>
+            <input
+              type="text"
+              placeholder="Enter Longitude"
+              name="location.longitude"
+              value={formik.values.location.longitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.location?.longitude && formik.errors.location?.longitude && (
+              <div className="error">{formik.errors.location.longitude}</div>
+            )}
           </>
         )}
 
         <label>Additional Notes:</label>
-        <textarea placeholder='Enter any additional information here' value={additionalNotes} onChange={(e) => setAdditionalNotes(e.target.value)} rows='4' cols='50'></textarea>
+        <textarea
+          placeholder="Enter any additional information here"
+          name="additionalNotes"
+          value={formik.values.additionalNotes}
+          onChange={formik.handleChange}
+          rows="4"
+          cols="50"
+        ></textarea>
+        {formik.touched.additionalNotes && formik.errors.additionalNotes && (
+          <div className="error">{formik.errors.additionalNotes}</div>
+        )}
 
-        <button type='submit' onClick={(e) => handleSubmit(e)}>Submit Sighting</button>
+        <button type="submit">Submit Sighting</button>
       </form>
     </div>
   );
-}
+};
 
 export default SightingForm;
