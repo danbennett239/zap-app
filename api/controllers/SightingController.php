@@ -6,30 +6,18 @@ use App\Models\SightingModel;
 use App\Helpers\ResponseHelper;
 
 class SightingController {
-    // public function getSightings($request) {
-    //     $limit = $request['limit'] ?? 10;
-    //     $offset = $request['offset'] ?? 0;
-    //     $status = $request['status'] ?? null;
-
-    //     $sightingModel = new SightingModel();
-    //     $sightings = $sightingModel->getSightings($limit, $offset, $status);
-
-    //     return ResponseHelper::jsonResponse($sightings);
-    // }
-
     public function getSightings($request) {
-        // Extract parameters from the request with default values
-        $limit = isset($request['limit']) ? (int)$request['limit'] : 10;
-        $offset = isset($request['offset']) ? (int)$request['offset'] : 0;
-        $sortField = $request['sortField'] ?? 'created_at';
+        // Sanitize and validate parameters
+        $limit = isset($request['limit']) && filter_var($request['limit'], FILTER_VALIDATE_INT) ? (int)$request['limit'] : 10;
+        $offset = isset($request['offset']) && filter_var($request['offset'], FILTER_VALIDATE_INT) ? (int)$request['offset'] : 0;
+        $sortField = preg_replace('/[^a-zA-Z0-9_]/', '', $request['sortField'] ?? 'created_at'); // Allow only alphanumeric and underscore
         $sortDirection = isset($request['sortDirection']) && strtolower($request['sortDirection']) === 'asc' ? 'asc' : 'desc';
 
-        // Collect filters from the request
+        // Sanitize filters
         $filters = [];
         foreach ($request as $key => $value) {
-            // Add filters based on supported parameters
             if (preg_match('/^(id|latitude|longitude|created_at|updated_at|status|mortality_type|fence_type|road_type|additional_notes)_(gt|gte|lt|lte|eq|like)$/', $key)) {
-                $filters[$key] = $value;
+                $filters[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); // Escape HTML entities
             }
         }
 
@@ -48,6 +36,9 @@ class SightingController {
     }
 
     public function getSightingById($id) {
+        // Sanitize the ID
+        $id = (int)$id;
+
         $sightingModel = new SightingModel();
         $sighting = $sightingModel->getSightingById($id);
 
@@ -59,7 +50,11 @@ class SightingController {
     }
 
     public function createSighting() {
+        // Decode input data
         $data = json_decode(file_get_contents("php://input"), true);
+
+        // Validate and sanitize input data
+        $data = $this->sanitizeSightingData($data);
 
         $sightingModel = new SightingModel();
         $result = $sightingModel->createSighting($data);
@@ -71,16 +66,17 @@ class SightingController {
         }
     }
 
-    public function updateSighting($id) {
-        $data = json_decode(file_get_contents("php://input"), true);
+    private function sanitizeSightingData($data) {
+        // Sanitize each field
+        $data['photo'] = htmlspecialchars($data['photo'] ?? '', ENT_QUOTES, 'UTF-8');
+        $data['location']['latitude'] = filter_var($data['location']['latitude'] ?? null, FILTER_VALIDATE_FLOAT);
+        $data['location']['longitude'] = filter_var($data['location']['longitude'] ?? null, FILTER_VALIDATE_FLOAT);
+        $data['status'] = htmlspecialchars($data['status'] ?? '', ENT_QUOTES, 'UTF-8');
+        $data['mortalityType'] = htmlspecialchars($data['mortalityType'] ?? '', ENT_QUOTES, 'UTF-8');
+        $data['metadata']['fenceType'] = htmlspecialchars($data['metadata']['fenceType'] ?? '', ENT_QUOTES, 'UTF-8');
+        $data['metadata']['roadType'] = htmlspecialchars($data['metadata']['roadType'] ?? '', ENT_QUOTES, 'UTF-8');
+        $data['additionalNotes'] = htmlspecialchars($data['additionalNotes'] ?? '', ENT_QUOTES, 'UTF-8');
 
-        $sightingModel = new SightingModel();
-        $result = $sightingModel->updateSighting($id, $data);
-
-        if ($result) {
-            return ResponseHelper::jsonResponse(['message' => 'Sighting updated successfully']);
-        } else {
-            return ResponseHelper::jsonResponse(['error' => 'Failed to update sighting'], 500);
-        }
+        return $data;
     }
 }
