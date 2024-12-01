@@ -4,7 +4,7 @@ import { getDistanceInKm } from '../../utils/ListView';
 import './CardView.css';
 
 const CardView = ({ sightings, loading, location, locationError }) => {
-  const [imageError, setImageError] = useState(false);
+  const [errorImages, setErrorImages] = useState({});
   const [selectedSighting, setSelectedSighting] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -28,6 +28,10 @@ const CardView = ({ sightings, loading, location, locationError }) => {
     setSelectedSighting(null);
   };
 
+  const handleImageError = (id) => {
+    setErrorImages((prev) => ({ ...prev, [id]: true }));
+  };
+
   return (
     <div className="card-view-container">
       {/* Cards */}
@@ -36,45 +40,47 @@ const CardView = ({ sightings, loading, location, locationError }) => {
           <div>Loading...</div>
         ) : sightings?.length > 0 ? (
           sightings.map((sighting, index) => (
-            <div key={index} className="card" onClick={() => handleCardClick(sighting)}>
+            <div
+              key={sighting?.id}
+              className="card"
+              onClick={() => handleCardClick(sighting)}
+            >
               <div className="card-photo">
-                {imageError || !sighting.photo ? (
+                {errorImages[sighting?.id] || !sighting?.photo ? (
                   <div className="placeholder-photo">
-                    {imageError ? 'Image error' : 'No image'}
+                    {errorImages[sighting?.id] ? 'Image error' : 'No image'}
                   </div>
                 ) : (
                   <img
                     src={sighting.photo}
-                    alt={`Sighting ${index + 1}`}
-                    onError={() => {
-                      setImageError(true);
-                    }}
+                    alt={`Sighting ${index}`}
+                    onError={() => handleImageError(sighting?.id)}
                   />
                 )}
               </div>
-              <div className={`card-status ${sighting.status.toLowerCase()}`}>
-                {sighting.status}
+              <div className={`card-status ${sighting?.status.toLowerCase()}`}>
+                {sighting?.status}
               </div>
               <div className="card-details">
                 <p>
                   <strong>Mortality Type:</strong>{' '}
-                  {sighting.mortalityType || 'Unknown'}
+                  {sighting?.mortality_type || 'Unknown'}
                 </p>
-                <p>
-                  <strong>Date:</strong> {formatDate(sighting.createdAt)}
-                </p>
-                {!locationError && sighting.location && (
+                {!locationError && sighting?.latitude && sighting?.longitude && (
                   <p>
                     <strong>Distance:</strong>{' '}
                     {getDistanceInKm(
-                      location.latitude,
-                      location.longitude,
-                      sighting.location.latitude,
-                      sighting.location.longitude
+                      location?.latitude,
+                      location?.longitude,
+                      sighting?.latitude,
+                      sighting?.longitude
                     )}{' '}
                     KM
                   </p>
                 )}
+                <p>
+                  <strong>Date:</strong> {formatDate(sighting.created_at)}
+                </p>
               </div>
             </div>
           ))
