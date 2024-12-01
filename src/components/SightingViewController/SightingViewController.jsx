@@ -5,6 +5,7 @@ import CardView from '../CardView/CardView';
 import ListView from '../ListView/ListView';
 import FilterComponent from '../Filter/FilterComponent';
 import './SightingViewController.css'
+import { toast } from 'react-toastify';
 
 const SightingViewController = ({ refreshTrigger }) => {
   // View Selection
@@ -36,10 +37,10 @@ const SightingViewController = ({ refreshTrigger }) => {
           sortDirection,
           filters
         );
-        console.log('Sighting', listSighting);
         setSightings(listSighting.sightings);
         setTotalPages(Math.ceil(listSighting.totalCount / limit));
       } catch (error) {
+        toast.error(`Error fetching sightings: ${error.message || 'Unknown error'}`)
         console.error('Error fetching sightings:', error);
       } finally {
         setLoading(false);
