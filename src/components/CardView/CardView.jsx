@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import SightingPopup from '../SightingPopup/SightingPopup';
 import { getDistanceInKm } from '../../utils/ListView';
 import './CardView.css';
 
 const CardView = ({ sightings, loading, location, locationError }) => {
   const [imageError, setImageError] = useState(false);
+  const [selectedSighting, setSelectedSighting] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   // Format date
   const formatDate = (dateString) => {
@@ -15,6 +18,16 @@ const CardView = ({ sightings, loading, location, locationError }) => {
       .padStart(2, '0')}/${date.getFullYear()}`;
   };
 
+  const handleCardClick = (sighting) => {
+    setSelectedSighting(sighting);
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedSighting(null);
+  };
+
   return (
     <div className="card-view-container">
       {/* Cards */}
@@ -23,7 +36,7 @@ const CardView = ({ sightings, loading, location, locationError }) => {
           <div>Loading...</div>
         ) : sightings?.length > 0 ? (
           sightings.map((sighting, index) => (
-            <div key={index} className="card">
+            <div key={index} className="card" onClick={() => handleCardClick(sighting)}>
               <div className="card-photo">
                 {imageError || !sighting.photo ? (
                   <div className="placeholder-photo">
@@ -69,6 +82,9 @@ const CardView = ({ sightings, loading, location, locationError }) => {
           <div>No Sightings Available</div>
         )}
       </div>
+      {isPopupOpen && selectedSighting && (
+        <SightingPopup sighting={selectedSighting} onClose={handleClosePopup} />
+      )}
     </div>
   );
 };

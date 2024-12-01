@@ -74,7 +74,7 @@ h2 {
 }
 
 /* Modal styling */
-.modal-overlay {
+/* .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -121,7 +121,7 @@ h2 {
 
 .close-btn:hover {
   opacity: 0.8;
-}
+} */
 
 .list-view {
   padding: 20px;

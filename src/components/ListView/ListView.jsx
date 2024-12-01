@@ -10,17 +10,17 @@ const ListView = ({
   locationError,
   handleSort,
 }) => {
-  const [selectedSightingId, setSelectedSightingId] = useState(null);
+  const [selectedSighting, setSelectedSighting] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const handleRowClick = (sightingId) => {
-    setSelectedSightingId(sightingId);
+  const handleRowClick = (sighting) => {
+    setSelectedSighting(sighting);
     setIsPopupOpen(true);
   };
 
   const handleClosePopup = () => {
     setIsPopupOpen(false);
-    setSelectedSightingId(null);
+    setSelectedSighting(null);
   };
 
   // Format date to dd/mm/yy
@@ -48,12 +48,12 @@ const ListView = ({
         </div>
         {loading ? (
           <div>Loading...</div>
-        ) : sightings?.length  ? (
+        ) : sightings?.length ? (
           sightings.map((sighting) => (
             <div
               key={sighting.id}
               className="list-row"
-              onClick={() => handleRowClick(sighting.id)}
+              onClick={() => handleRowClick(sighting)}
             >
               <span>{sighting.status}</span>
               <span>{sighting.mortality_type}</span>
@@ -76,16 +76,8 @@ const ListView = ({
           <div>No Sightings Available</div>
         )}
       </div>
-
-      {isPopupOpen && selectedSightingId && (
-        <div className="modal-overlay" onClick={handleClosePopup}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={handleClosePopup}>
-              X
-            </button>
-            <SightingPopup id={selectedSightingId} />
-          </div>
-        </div>
+      {isPopupOpen && selectedSighting && (
+        <SightingPopup sighting={selectedSighting} onClose={handleClosePopup} />
       )}
     </div>
   );
