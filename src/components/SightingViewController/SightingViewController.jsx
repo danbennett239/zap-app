@@ -12,7 +12,7 @@ const SightingViewController = ({ refreshTrigger }) => {
   const [selectedView, setSelectedView] = useState('card');
 
   // Pagination
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -151,7 +151,6 @@ const SightingViewController = ({ refreshTrigger }) => {
           onChange={(e) => handlePageSizeChange(Number(e.target.value))}
           value={limit}
         >
-          <option value="5">5</option>
           <option value="10">10</option>
           <option value="25">25</option>
           <option value="50">50</option>
