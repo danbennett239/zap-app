@@ -14,8 +14,6 @@ if ($uri === '/zap-app/api/sightings' && $requestMethod === 'GET') {
     $controller->getSightingById($matches[1]);
 } elseif ($uri === '/zap-app/api/sightings' && $requestMethod === 'POST') {
     $controller->createSighting();
-} elseif (preg_match('#^/sightings/(\d+)$#', $uri, $matches) && $requestMethod === 'PUT') {
-    $controller->updateSighting($matches[1]);
 } else {
     http_response_code(404);
     echo json_encode(['error' => 'Not Found']);

@@ -12,7 +12,7 @@ class SightingController {
         $offset = isset($request['offset']) && filter_var($request['offset'], FILTER_VALIDATE_INT) ? (int)$request['offset'] : 0;
         $sortField = preg_replace('/[^a-zA-Z0-9_]/', '', $request['sortField'] ?? 'created_at'); // Allow only alphanumeric and underscore
         $sortDirection = isset($request['sortDirection']) && strtolower($request['sortDirection']) === 'asc' ? 'asc' : 'desc';
-
+    
         // Sanitize filters
         $filters = [];
         foreach ($request as $key => $value) {
@@ -20,20 +20,25 @@ class SightingController {
                 $filters[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); // Escape HTML entities
             }
         }
-
-        // Pass parameters to the model
+    
+        // Merge filters with the other parameters for the model
+        $params = array_merge(
+            [
+                'limit' => $limit,
+                'offset' => $offset,
+                'sortField' => $sortField,
+                'sortDirection' => $sortDirection
+            ],
+            $filters
+        );
+    
         $sightingModel = new SightingModel();
-        $sightings = $sightingModel->getSightings([
-            'limit' => $limit,
-            'offset' => $offset,
-            'sortField' => $sortField,
-            'sortDirection' => $sortDirection,
-            'filters' => $filters
-        ]);
-
+        $sightings = $sightingModel->getSightings($params);
+    
         // Return JSON response
         return ResponseHelper::jsonResponse($sightings);
     }
+    
 
     public function getSightingById($id) {
         // Sanitize the ID
