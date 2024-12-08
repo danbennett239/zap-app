@@ -120,17 +120,6 @@
   background-color: #45a049;
 }
 
-/* Photo Options Button */
-/* .sighting-form .photo-options-button {
-  background-color: #007bff;
-  color: white;
-  margin-bottom: 20px;
-}
-
-.sighting-form .photo-options-button:hover {
-  background-color: #0056b3;
-} */
-
 /* Image and Video Styling */
 .sighting-form img, 
 .sighting-form canvas {
@@ -138,6 +127,12 @@
   margin: 0 auto 20px;
   max-width: 100%;
   border-radius: 4px;
+}
+
+.sighting-form .error {
+  color: #d8000c;
+  font-weight: bold;
+  margin: 5px;
 }
 
 /* Form Flex Layout for larger screens */
