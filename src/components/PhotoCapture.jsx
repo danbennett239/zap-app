@@ -2,7 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import useMediaDevice from '../hooks/useMediaDevice';
 
 const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
-  const { videoRef, error: mediaError } = useMediaDevice();
+
+  const {
+    videoRef,
+    devices,
+    selectedDeviceId,
+    setSelectedDeviceId,
+    error: mediaError,
+  } = useMediaDevice();
+
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -52,8 +60,26 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
     setShowPhotoOptions(false);
   };
 
+  const handleDeviceSelect = (e) => {
+    setSelectedDeviceId(e.target.value);
+  };
+
   return (
     <div>
+      {devices.length > 0 ? (
+        <select
+          value={selectedDeviceId || ''}
+          onChange={handleDeviceSelect}
+        >
+          {devices.map((device) => (
+            <option key={device.deviceId} value={device.deviceId}>
+              {device.label || `Camera ${device.deviceId}`}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <p>No cameras available</p>
+      )}
       <label>Take a Photo:</label>
       {mediaError && <p>{mediaError}</p>}
       <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />

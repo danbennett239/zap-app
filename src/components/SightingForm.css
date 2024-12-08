@@ -101,11 +101,11 @@
   border-radius: 50%;
 }
 
-/* TODO this is where the global green button is from  */
 /* Button Styling */
 .sighting-form button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color-dark);
+  font-weight: bold;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -117,7 +117,7 @@
 }
 
 .sighting-form button:hover {
-  background-color: #45a049;
+  background-color: var(--button-hover-color);
 }
 
 /* Image and Video Styling */

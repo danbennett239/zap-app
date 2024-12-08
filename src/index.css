@@ -1,3 +1,9 @@
+:root {
+  --primary-color: #d2b48c;
+  --button-hover-color: #c8a678;
+  --text-color-dark: #5a3e2b;
+}
+
 html, body {
   margin: 0;
   padding: 0;
