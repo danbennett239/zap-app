@@ -3,13 +3,15 @@ import useMediaDevice from '../hooks/useMediaDevice';
 
 const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
 
-  const {
-    videoRef,
-    devices,
-    selectedDeviceId,
-    setSelectedDeviceId,
-    error: mediaError,
-  } = useMediaDevice();
+  // const {
+  //   videoRef,
+  //   devices,
+  //   selectedDeviceId,
+  //   setSelectedDeviceId,
+  //   error: mediaError,
+  // } = useMediaDevice();
+
+  const { videoRef, devices, selectedDeviceId, setSelectedDeviceId, error, hasPermission, initializingPermissions, loadingCamera } = useMediaDevice();
 
   const canvasRef = useRef(null);
 
@@ -66,7 +68,7 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
 
   return (
     <div>
-      {devices.length > 0 ? (
+      {/* {devices.length > 0 ? (
         <select
           value={selectedDeviceId || ''}
           onChange={handleDeviceSelect}
@@ -79,9 +81,31 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
         </select>
       ) : (
         <p>No cameras available</p>
+      )} */}
+      {loadingCamera && <p>Loading camera...</p>}
+      {initializingPermissions && <p>Requesting camera permissions, please wait...</p>}
+      {error && <p>{error === 'Media device access denied'
+        ? 'Please enable camera permissions in your browser settings.'
+        : error}</p>}
+      {/* {!loading && !error && !hasPermission && <p>Please allow camera access...</p>} */}
+      {hasPermission && devices.length === 0 && <p>No cameras available</p>}
+      {hasPermission && devices.length > 0 && (
+        <>
+          <select
+            value={selectedDeviceId || ''}
+            onChange={(e) => setSelectedDeviceId(e.target.value)}
+          >
+            {devices.map((device) => (
+              <option key={device.deviceId} value={device.deviceId}>
+                {device.label || `Camera ${device.deviceId}`}
+              </option>
+            ))}
+          </select>
+          {/* Show Take Photo button, video, etc. */}
+        </>
       )}
       <label>Take a Photo:</label>
-      {mediaError && <p>{mediaError}</p>}
+      {/* {mediaError && <p>{mediaError}</p>} */}
       <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />
       <canvas ref={canvasRef} width="300" height="200" />
       <button type="button" onClick={handleTakePhoto}>Capture Photo</button>

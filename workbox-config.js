@@ -8,6 +8,7 @@ module.exports = {
 		/^utm_/,
 		/^fbclid$/
 	],
+	navigateFallback: '/zap-app/index.html',
 	runtimeCaching: [
 		{
 		  urlPattern: ({ url }) => url.pathname === '/zap-app/api/sightings',

@@ -6,6 +6,10 @@ use PDO;
 use PDOException;
 
 class Database {
+    // private $host = 'localhost:3306';
+    // private $db_name = 'db1087_zap_app';
+    // private $username = 'db1087_zap_app';
+    // private $password = 'XxkFUT5S5Sh5Un2';
     private $host = 'localhost';
     private $db_name = 'zap_app';
     private $username = 'root';

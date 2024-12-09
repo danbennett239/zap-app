@@ -1,23 +1,75 @@
 import { useState, useEffect, useRef } from 'react';
 
-const useMediaDevice = (initialConstraints = { video: true, audio: false }) => {
-  const [devices, setDevices] = useState([]);
-  const [selectedDeviceId, setSelectedDeviceId] = useState(null);
+const useMediaDevice = () => {
   const [error, setError] = useState(null);
+  const [devices, setDevices] = useState([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState(localStorage.getItem('preferredDeviceId') || null);
+  const [hasPermission, setHasPermission] = useState(false);
+  const [initializingPermissions, setInitializingPermissions] = useState(true); // true before permission known
+  const [loadingCamera, setLoadingCamera] = useState(false); // true when setting up camera stream
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
-  // Fetch available video input devices
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        // Initially, request permission with either preferred device or generic
+        const constraints = selectedDeviceId
+          ? { video: { deviceId: { exact: selectedDeviceId } } }
+          : { video: true };
+
+        const testStream = await navigator.mediaDevices.getUserMedia(constraints);
+        testStream.getTracks().forEach(t => t.stop());
+        if (isMounted) {
+          setHasPermission(true);
+        }
+      } catch (err) {
+        // If failed with a preferred device, try fallback
+        if (selectedDeviceId) {
+          setSelectedDeviceId(null);
+          try {
+            const fallbackStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            fallbackStream.getTracks().forEach(t => t.stop());
+            if (isMounted) {
+              setHasPermission(true);
+            }
+          } catch (fallbackErr) {
+            if (isMounted) {
+              setError('Media device access denied.');
+            }
+          }
+        } else {
+          if (isMounted) {
+            setError('Media device access denied.');
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setInitializingPermissions(false);
+        }
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   useEffect(() => {
     const fetchDevices = async () => {
+      if (!hasPermission || initializingPermissions) return;
       try {
         const deviceInfos = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = deviceInfos.filter(device => device.kind === 'videoinput');
+        const videoDevices = deviceInfos.filter(d => d.kind === 'videoinput');
         setDevices(videoDevices);
-
-        // Automatically set the first device as the default if none is selected
-        if (videoDevices.length > 0 && !selectedDeviceId) {
-          setSelectedDeviceId(videoDevices[0].deviceId);
+        // If no preferred device or not found, set default
+        if (!selectedDeviceId || !videoDevices.some(d => d.deviceId === selectedDeviceId)) {
+          if (videoDevices.length > 0) {
+            setSelectedDeviceId(videoDevices[0].deviceId);
+          } else {
+            setError('No cameras available');
+          }
         }
       } catch (err) {
         setError('Error enumerating devices.');
@@ -25,48 +77,47 @@ const useMediaDevice = (initialConstraints = { video: true, audio: false }) => {
     };
 
     fetchDevices();
-  }, [selectedDeviceId]);
+  }, [hasPermission, initializingPermissions, selectedDeviceId]);
 
-  // Get media stream based on the selected device
   useEffect(() => {
     let isMounted = true;
-
     const getMediaStream = async () => {
-      if (!selectedDeviceId) return;
-
+      if (!hasPermission || !selectedDeviceId || initializingPermissions) return;
       try {
-        const constraints = {
-          ...initialConstraints,
-          video: { ...initialConstraints.video, deviceId: { exact: selectedDeviceId } },
-        };
-
+        setLoadingCamera(true);
+        const constraints = { video: { deviceId: { exact: selectedDeviceId } } };
         const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-
-        if (isMounted) {
+        if (isMounted && videoRef.current) {
           streamRef.current = mediaStream;
-          if (videoRef.current) {
-            videoRef.current.srcObject = mediaStream;
-          }
+          videoRef.current.srcObject = mediaStream;
         }
       } catch (err) {
         if (isMounted) {
           setError('Media device access denied or unsupported device selected.');
         }
+      } finally {
+        if (isMounted) {
+          setLoadingCamera(false);
+        }
       }
     };
-
     getMediaStream();
 
-    // Cleanup stream on unmount
     return () => {
       isMounted = false;
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current.getTracks().forEach(track => track.stop());
       }
     };
-  }, [selectedDeviceId, initialConstraints]);
+  }, [hasPermission, selectedDeviceId, initializingPermissions]);
 
-  return { videoRef, devices, selectedDeviceId, setSelectedDeviceId, error };
+  useEffect(() => {
+    if (selectedDeviceId) {
+      localStorage.setItem('preferredDeviceId', selectedDeviceId);
+    }
+  }, [selectedDeviceId]);
+
+  return { videoRef, devices, selectedDeviceId, setSelectedDeviceId, error, hasPermission, initializingPermissions, loadingCamera };
 };
 
 export default useMediaDevice;

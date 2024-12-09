@@ -19,7 +19,7 @@ reportWebVitals();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js')
+      .register('/zap-app/sw.js')
       .then((registration) => {
         console.log('Workbox Service Worker registered:', registration);
       })

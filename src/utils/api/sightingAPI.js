@@ -3,7 +3,7 @@
 // Clean up error handing by passing object back -> can then create toast
 // Add .env
 
-const API_BASE_URL = 'http://localhost/zap-app/api';
+const API_BASE_URL = 'https://db1087.brighton.domains/zap-app/api';
 
 // Function to create a new sighting (POST request)
 export const createSighting = async (sightingData) => {

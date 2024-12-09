@@ -2,44 +2,45 @@
   "short_name": "Pangolens",
   "name": "Pangolens",
   "description": "Track pangolin sightings with ease",
-  "start_url": "/home",
+  "start_url": "/zap-app/home",
+  "scope": "/zap-app/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "icons": [
     {
-      "src": "pangolin.png",
+      "src": "/zap-app/pangolin.png",
       "sizes": "any",
       "type": "image/png"
     },
     {
-      "src": "icons/favicon-96x96.png",
+      "src": "/zap-app/icons/favicon-96x96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "icons/favicon.ico",
+      "src": "/zap-app/icons/favicon.ico",
       "sizes": "any",
       "type": "image/x-icon"
     },
     {
-      "src": "icons/apple-touch-icon.png",
+      "src": "/zap-app/icons/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     },
     {
-      "src": "icons/favicon.svg",
+      "src": "/zap-app/icons/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     },
     {
-      "src": "icons/web-app-manifest-192x192.png",
+      "src": "/zap-app/icons/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icons/web-app-manifest-512x512.png",
+      "src": "/zap-app/icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

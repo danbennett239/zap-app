@@ -12,7 +12,7 @@ const Banner = () => {
       <div className="banner__content">
         <div className="banner__logo">
           <img
-            src="/pangolin.png"
+            src="/zap-app/pangolin.png"
             alt="Pangolin Icon"
             className="banner__icon"
           />
