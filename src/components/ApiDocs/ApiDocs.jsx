@@ -17,102 +17,111 @@ const ApiDocs = () => {
           <span className="endpoint-method">GET</span>
           <code className="endpoint-url">/sightings</code>
         </h3>
-        <p>
-          Retrieve a list of sightings with optional filters, sorting, and
-          pagination.
-        </p>
+        <p>Retrieve a list of sightings with optional filters, sorting, and pagination.</p>
+
         <h4>Query Parameters:</h4>
-        <ul>
-          <li>
-            <strong>limit</strong> (integer, optional): Number of records to
-            return (default: 10).
-          </li>
-          <li>
-            <strong>offset</strong> (integer, optional): Number of records to
-            skip (default: 0).
-          </li>
-          <li>
-            <strong>sortField</strong> (string, optional): Field to sort by
-            (default: <code>created_at</code>).
-          </li>
-          <li>
-            <strong>sortDirection</strong> (string, optional): <code>asc</code>{' '}
-            or <code>desc</code> (default: <code>desc</code>).
-          </li>
-          <li>
-            <strong>Filters:</strong> Apply filters using the following
-            patterns:
-            <ul>
-              <li>
-                <code>{'{field}_eq'}</code>: Exact match.
-              </li>
-              <li>
-                <code>{'{field}_gt'}</code>: Greater than.
-              </li>
-              <li>
-                <code>{'{field}_gte'}</code>: Greater than or equal.
-              </li>
-              <li>
-                <code>{'{field}_lt'}</code>: Less than.
-              </li>
-              <li>
-                <code>{'{field}_lte'}</code>: Less than or equal.
-              </li>
-              <li>
-                <code>{'{field}_like'}</code>: Case-insensitive partial match.
-              </li>
-            </ul>
-            Filterable fields:
-            <ul>
-              <li>
-                <code>id</code>
-              </li>
-              <li>
-                <code>latitude</code>
-              </li>
-              <li>
-                <code>longitude</code>
-              </li>
-              <li>
-                <code>created_at</code>
-              </li>
-              <li>
-                <code>updated_at</code>
-              </li>
-              <li>
-                <code>status</code>
-              </li>
-              <li>
-                <code>mortality_type</code>
-              </li>
-              <li>
-                <code>fence_type</code>
-              </li>
-              <li>
-                <code>road_type</code>
-              </li>
-              <li>
-                <code>additional_notes</code>
-              </li>
-            </ul>
-          </li>
+        <table className="query-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>limit</strong></td>
+              <td>integer</td>
+              <td>Number of records to return (default: 10).</td>
+            </tr>
+            <tr>
+              <td><strong>offset</strong></td>
+              <td>integer</td>
+              <td>Number of records to skip (default: 0).</td>
+            </tr>
+            <tr>
+              <td><strong>sortField</strong></td>
+              <td>string</td>
+              <td>
+                Field to sort by (default: <code>created_at</code>).
+              </td>
+            </tr>
+            <tr>
+              <td><strong>sortDirection</strong></td>
+              <td>string</td>
+              <td>
+                <code>asc</code> or <code>desc</code> (default: <code>desc</code>).
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Filters:</h4>
+        <table className="query-table">
+          <thead>
+            <tr>
+              <th>Filter</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>{'{field}_eq'}</code></td>
+              <td>Exact match.</td>
+            </tr>
+            <tr>
+              <td><code>{'{field}_gt'}</code></td>
+              <td>Greater than.</td>
+            </tr>
+            <tr>
+              <td><code>{'{field}_gte'}</code></td>
+              <td>Greater than or equal.</td>
+            </tr>
+            <tr>
+              <td><code>{'{field}_lt'}</code></td>
+              <td>Less than.</td>
+            </tr>
+            <tr>
+              <td><code>{'{field}_lte'}</code></td>
+              <td>Less than or equal.</td>
+            </tr>
+            <tr>
+              <td><code>{'{field}_like'}</code></td>
+              <td>Case-insensitive partial match.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Filterable Fields:</h4>
+        <ul className="filterable-fields">
+          <li><code>id</code></li>
+          <li><code>latitude</code></li>
+          <li><code>longitude</code></li>
+          <li><code>created_at</code></li>
+          <li><code>updated_at</code></li>
+          <li><code>status</code></li>
+          <li><code>mortality_type</code></li>
+          <li><code>fence_type</code></li>
+          <li><code>road_type</code></li>
+          <li><code>additional_notes</code></li>
         </ul>
+
         <h4>Response:</h4>
         <pre>
           <code>
             {`{
-                "sightings": [ /* Array of sighting objects */ ],
-                "totalCount": 100
-            }`}
+  "sightings": [
+    /* Array of sighting objects */
+  ],
+  "totalCount": 100
+}`}
           </code>
         </pre>
+
         <h4>Example Request:</h4>
         <pre>
           <code>
-            GET{' '}
-            <span className="base-url">
-              /zap-app/api/sightings?limit=5&offset=10&status_eq=Dead&mortality_type_like=road
-            </span>
+            GET <span className="base-url">/zap-app/api/sightings?limit=5&offset=10&status_eq=Dead</span>
           </code>
         </pre>
       </section>
@@ -133,7 +142,11 @@ const ApiDocs = () => {
         </ul>
         <h4>Response:</h4>
         <pre>
-          <code>{`{ /* Sighting object */ }`}</code>
+          <code>
+            {`{
+  /* Sighting object */
+}`}
+          </code>
         </pre>
         <h4>Example Request:</h4>
         <pre>
@@ -153,19 +166,19 @@ const ApiDocs = () => {
         <pre>
           <code>
             {`{
-                "photo": "base64_encoded_photo_string",
-                "location": {
-                  "latitude": 12.345678,
-                  "longitude": 98.7654321
-                },
-                "status": "Alive",
-                "mortalityType": "Road Death",
-                "additionalNotes": "Optional notes here",
-                "metadata": {
-                  "fenceType": "Electric",
-                  "roadType": "Highway"
-                }
-            }`}
+  "photo": "base64_encoded_photo_string",
+  "location": {
+    "latitude": 12.345678,
+    "longitude": 98.7654321
+  },
+  "status": "Alive",
+  "mortalityType": "Road Death",
+  "additionalNotes": "Optional notes here",
+  "metadata": {
+    "fenceType": "Electric",
+    "roadType": "Highway"
+  }
+}`}
           </code>
         </pre>
         <h4>Response:</h4>
@@ -186,8 +199,8 @@ const ApiDocs = () => {
         <pre>
           <code>
             {`{
-              "error": "Sighting not found"
-            }`}
+  "error": "Sighting not found"
+}`}
           </code>
         </pre>
         <h4>Possible HTTP Status Codes:</h4>

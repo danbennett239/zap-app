@@ -1,46 +1,55 @@
-/* ApiDocs.css */
-
+/* Container styling */
 .api-docs {
-  max-width: 900px;
-  margin: 0 auto;
   padding: 20px;
-  background-color: #f4efe3; /* Sandy background */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #5a3e2b; /* Dark brown text */
+  background: linear-gradient(to bottom, #f5e8c7, #e8d8b9); /* Sandy gradient */
+  color: var(--text-color-dark);
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
+/* Title styling */
 .api-docs h1 {
-  text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 40px;
-  color: #8c6b4f; /* Muted brown */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
+/* Section styling */
+.api-docs section {
+  background: rgba(229, 217, 189, 0.8); /* Light sandy background */
+  padding: 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  margin-bottom: 30px;
+}
+
+/* Subheading styling */
 .api-docs h2 {
   font-size: 1.8rem;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #d2b48c; /* Sandy brown border */
+  margin-bottom: 15px;
+  border-bottom: 2px solid #d2b48c; /* Sandy border */
   padding-bottom: 10px;
 }
 
 .api-docs h3 {
   font-size: 1.5rem;
-  margin-top: 30px;
-  margin-bottom: 15px;
-  color: #7f5f3c; /* Darker brown */
+  margin: 20px 0 10px;
+  color: #7f5f3c; /* Muted brown */
 }
 
 .api-docs h4 {
   font-size: 1.2rem;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   color: #5a3e2b;
 }
 
+/* Text and list styling */
 .api-docs p {
   line-height: 1.6;
   margin-bottom: 15px;
+  font-size: 1.1rem;
 }
 
 .api-docs ul {
@@ -58,6 +67,7 @@
   margin-bottom: 5px;
 }
 
+/* Code block styling */
 .api-docs code {
   background-color: #fff8e1; /* Light sandy background for code */
   padding: 2px 4px;
@@ -69,35 +79,31 @@
 .api-docs pre {
   background-color: #fff8e1;
   padding: 15px;
-  border-left: 4px solid #d2b48c;
+  border-left: 4px solid #d2b48c; /* Sandy border */
   overflow-x: auto;
-  margin-bottom: 20px;
+  margin: 20px auto; /* Center the block */
+  font-size: 1rem;
+  border-radius: 4px;
+  max-width: 33%; /* Restrict to the middle third of the screen */
+  text-align: left;
+  box-sizing: border-box; /* Ensure padding and border are included in width */
 }
 
 .api-docs pre code {
   background-color: transparent;
   padding: 0;
+  white-space: pre-wrap; /* Ensure long lines wrap */
+  word-wrap: break-word; /* Handle word breaks properly */
 }
 
-.api-docs strong {
-  color: #7f5f3c;
-}
-
+/* Button and link styling */
 .api-docs a {
-  color: #8c6b4f;
+  color: var(--text-color-dark);
   text-decoration: none;
 }
 
 .api-docs a:hover {
   text-decoration: underline;
-}
-
-.api-docs section {
-  background-color: rgba(255, 248, 225, 0.9);
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .api-docs .endpoint-method {
@@ -122,6 +128,45 @@
   display: inline-block;
 }
 
+.query-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background: #fff8e1; /* Light sandy background for tables */
+  border-radius: 8px;
+  overflow: hidden; /* To apply border-radius to the entire table */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+.query-table th,
+.query-table td {
+  text-align: left;
+  padding: 10px 15px;
+  border: 1px solid #d2b48c; /* Sandy border */
+  font-size: 1rem;
+  color: #3e2723; /* Dark brown text */
+}
+
+.query-table th {
+  background: #d2b48c; /* Sandy brown header background */
+  color: #fff; /* White header text */
+  font-weight: bold;
+}
+
+.query-table tbody tr:nth-child(odd) {
+  background: rgba(255, 248, 225, 0.7); /* Light sandy alternate row background */
+}
+
+.query-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.7); /* White alternate row background */
+}
+
+.query-table tbody tr:hover {
+  background: rgba(210, 180, 140, 0.3); /* Light sandy hover background */
+  transition: background 0.3s ease;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .api-docs {
     padding: 15px;
@@ -129,7 +174,7 @@
 
   .api-docs h1 {
     font-size: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .api-docs h2 {
@@ -144,7 +189,17 @@
     font-size: 1.1rem;
   }
 
+  .api-docs p, .api-docs li {
+    font-size: 1rem;
+  }
+
   .api-docs pre {
-    padding: 10px;
+    max-width: 100%; /* Allow full width on smaller screens */
+    margin: 20px 0; /* Remove horizontal centering */
+  }
+  .query-table th,
+  .query-table td {
+    font-size: 0.9rem;
+    padding: 8px 10px;
   }
 }
