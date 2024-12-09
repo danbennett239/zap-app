@@ -123,9 +123,14 @@
 /* Image and Video Styling */
 .sighting-form img, 
 .sighting-form canvas {
+  max-width: 300px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
   margin: 0 auto 20px;
-  max-width: 100%;
+  /* max-width: 100%; */
   border-radius: 4px;
 }
 

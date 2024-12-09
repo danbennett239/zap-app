@@ -111,7 +111,7 @@ const SightingForm = ({ handleSightingCreation }) => {
         {formik.values.photo && (
           <div>
             <h4>Preview:</h4>
-            <img src={formik.values.photo} alt="Captured" width="300" height="200" />
+            <img src={formik.values.photo} alt="Captured"/>
           </div>
         )}
         {formik.touched.photo && formik.errors.photo && (
