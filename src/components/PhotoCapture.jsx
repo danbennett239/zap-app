@@ -82,12 +82,10 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
       ) : (
         <p>No cameras available</p>
       )} */}
-      {loadingCamera && <p>Loading camera...</p>}
-      {initializingPermissions && <p>Requesting camera permissions, please wait...</p>}
+      {loadingCamera || initializingPermissions && <p>Loading camera...</p>}
       {error && <p>{error === 'Media device access denied'
         ? 'Please enable camera permissions in your browser settings.'
         : error}</p>}
-      {/* {!loading && !error && !hasPermission && <p>Please allow camera access...</p>} */}
       {hasPermission && devices.length === 0 && <p>No cameras available</p>}
       {hasPermission && devices.length > 0 && (
         <>
@@ -101,10 +99,10 @@ const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
               </option>
             ))}
           </select>
-          {/* Show Take Photo button, video, etc. */}
+
         </>
       )}
-      <label>Take a Photo:</label>
+      {/* {loadingCamera ? (<></>) : (<label>Take a Photo:</label>)} */}
       {/* {mediaError && <p>{mediaError}</p>} */}
       <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />
       <canvas ref={canvasRef} width="300" height="200" />
