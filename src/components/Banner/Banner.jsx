@@ -23,7 +23,7 @@ const Banner = () => {
         <nav className="banner__nav">
           <ul className="banner__nav-links">
             <li className="banner__nav-item">
-              <Link to="/" className="banner__nav-link">Home</Link>
+              <Link to="/home" className="banner__nav-link">Home</Link>
             </li>
             <li className="banner__nav-item">
               <Link to="/api-docs" className="banner__nav-link">API Documentation</Link>
@@ -45,7 +45,7 @@ const Banner = () => {
         <nav className="banner__mobile-nav">
           <ul className="banner__mobile-nav-links">
             <li className="banner__mobile-nav-item">
-              <Link to="/" className="banner__mobile-nav-link" onClick={toggleMenu}>Home</Link>
+              <Link to="/home" className="banner__mobile-nav-link" onClick={toggleMenu}>Home</Link>
             </li>
             <li className="banner__mobile-nav-item">
               <Link to="/api-docs" className="banner__mobile-nav-link" onClick={toggleMenu}>API Documentation</Link>

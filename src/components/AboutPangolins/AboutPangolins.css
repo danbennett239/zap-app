@@ -2,7 +2,7 @@
 .about-pangolins-container {
     padding: 20px;
     background: linear-gradient(to bottom, #f5e8c7, #e8d8b9); /* Sandy gradient */
-    color: #5a3e2b; /* Dark brown for text */
+    color: var(--text-color-dark);
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
   }
@@ -48,11 +48,11 @@
     max-width: 400px;
     height: 200px;
     background: #e6d8b9; /* Light sandy placeholder */
-    border: 1px solid #5a3e2b; /* Dark brown border */
+    border: 1px solid var(--text-color-dark);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #5a3e2b; /* Dark brown text */
+    color: var(--text-color-dark);
     font-size: 1rem;
     font-style: italic;
     text-align: center;
@@ -80,7 +80,7 @@
   }
   
   .about-sources a {
-    color: #5a3e2b;
+    color: var(--text-color-dark);
     text-decoration: none;
   }
   
