@@ -50,7 +50,14 @@ const SightingForm = ({ handleSightingCreation }) => {
       try {
         const createdSighting = await createSighting(sightingData);
         if (!createdSighting) {
-          toast.error('Invalid response from the server. Please try again.');
+          if (!navigator.onLine) {
+            toast.success('Sighting created successfully! It will be synced when you are back online.');
+            if (handleSightingCreation) {
+              handleSightingCreation();
+            }
+          } else {
+            toast.error('Invalid response from the server. Please try again.');
+          }
         } else {
           toast.success('Sighting created successfully!');
 
@@ -70,7 +77,7 @@ const SightingForm = ({ handleSightingCreation }) => {
     formik.setFieldValue('isChecked', newIsChecked);
     const newStatus = newIsChecked ? 'Alive' : 'Dead';
     formik.setFieldValue('status', newStatus);
-    
+
     if (newIsChecked) {
       // If switched to 'Alive', reset mortality-related fields
       formik.setFieldValue('mortalityType', '');
@@ -83,7 +90,6 @@ const SightingForm = ({ handleSightingCreation }) => {
   // Handle photo selection from PhotoOptions component
   const handlePhotoSelect = (photo) => {
     formik.setFieldValue('photo', photo);
-    console.log("PhotoT", photo.data);
   };
 
   return (
@@ -92,6 +98,7 @@ const SightingForm = ({ handleSightingCreation }) => {
         <h2>Report a Sighting</h2>
         <button
           type="button"
+          autoFocus
           className="photo-options-button"
           onClick={() => {
             setShowPhotoOptions(!showPhotoOptions);
@@ -111,7 +118,7 @@ const SightingForm = ({ handleSightingCreation }) => {
         {formik.values.photo && (
           <div>
             <h4>Preview:</h4>
-            <img src={formik.values.photo} alt="Captured"/>
+            <img src={formik.values.photo} alt="Captured" />
           </div>
         )}
         {formik.touched.photo && formik.errors.photo && (
@@ -158,16 +165,16 @@ const SightingForm = ({ handleSightingCreation }) => {
 
         {(formik.values.mortalityType === 'Fence Death: Electrocution' ||
           formik.values.mortalityType === 'Fence Death: Caught on non-electrified fence') && (
-          <>
-            <input
-              type="text"
-              placeholder="Enter Fence Type"
-              name="fenceType"
-              value={formik.values.fenceType}
-              onChange={formik.handleChange}
-            />
-          </>
-        )}
+            <>
+              <input
+                type="text"
+                placeholder="Enter Fence Type"
+                name="fenceType"
+                value={formik.values.fenceType}
+                onChange={formik.handleChange}
+              />
+            </>
+          )}
 
         {formik.values.mortalityType === 'Road Death' && (
           <>

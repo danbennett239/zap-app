@@ -34,60 +34,69 @@ const CardView = ({ sightings, loading, location, locationError }) => {
 
   return (
     <div className="card-view-container">
-      {/* Cards */}
-      <div className="card-grid">
-        {loading ? (
-          <div>Loading...</div>
-        ) : sightings?.length > 0 ? (
-          sightings.map((sighting, index) => (
-            <div
-              key={sighting?.id}
-              className="card"
-              onClick={() => handleCardClick(sighting)}
-            >
-              <div className="card-photo">
-                {errorImages[sighting?.id] || !sighting?.photo ? (
-                  <div className="placeholder-photo">
-                    {errorImages[sighting?.id] ? 'Image error' : 'No image'}
-                  </div>
-                ) : (
-                  <img
-                    src={sighting.photo}
-                    alt={`Sighting ${index}`}
-                    onError={() => handleImageError(sighting?.id)}
-                  />
-                )}
-              </div>
-              <div className={`card-status ${sighting?.status.toLowerCase()}`}>
-                {sighting?.status}
-              </div>
-              <div className="card-details">
-                <p>
-                  <strong>Mortality Type:</strong>{' '}
-                  {sighting?.mortality_type || 'Unknown'}
-                </p>
-                {!locationError && sighting?.latitude && sighting?.longitude && (
-                  <p>
-                    <strong>Distance:</strong>{' '}
-                    {getDistanceInKm(
-                      location?.latitude,
-                      location?.longitude,
-                      sighting?.latitude,
-                      sighting?.longitude
-                    )}{' '}
-                    KM
-                  </p>
-                )}
-                <p>
-                  <strong>Date:</strong> {formatDate(sighting.created_at)}
-                </p>
-              </div>
+      {/* If offline, display a message directly */}
+      {!navigator.onLine ? (
+        <div>No Sightings Available While Offline</div>
+      ) : (
+        <div className="card-grid">
+          {loading ? (
+            // <div>Loading...</div>
+            <div className="loading-container">
+              <img src="loading.gif" alt="Loading..."></img>
             </div>
-          ))
-        ) : (
-          <div>No Sightings Available</div>
-        )}
-      </div>
+          ) : sightings?.length > 0 ? (
+            sightings.map((sighting, index) => (
+              <div
+                key={sighting?.id}
+                className="card"
+                onClick={() => handleCardClick(sighting)}
+              >
+                <div className="card-photo">
+                  {errorImages[sighting?.id] || !sighting?.photo ? (
+                    <div className="placeholder-photo">
+                      {errorImages[sighting?.id] ? 'Image error' : 'No image'}
+                    </div>
+                  ) : (
+                    <img
+                      src={sighting.photo}
+                      alt={`Sighting ${index}`}
+                      onError={() => handleImageError(sighting?.id)}
+                    />
+                  )}
+                </div>
+                <div className={`card-status ${sighting?.status.toLowerCase()}`}>
+                  {sighting?.status}
+                </div>
+                <div className="card-details">
+                  {sighting?.status.trim().toLowerCase() === 'dead' && sighting?.mortality_type && (
+                    <p>
+                      <strong>Mortality Type:</strong>{' '}
+                      {sighting?.mortality_type || 'Unknown'}
+                    </p>
+                  )}
+                  {!locationError && sighting?.latitude && sighting?.longitude && (
+                    <p>
+                      <strong>Distance:</strong>{' '}
+                      {getDistanceInKm(
+                        location?.latitude,
+                        location?.longitude,
+                        sighting?.latitude,
+                        sighting?.longitude
+                      )}{' '}
+                      KM
+                    </p>
+                  )}
+                  <p>
+                    <strong>Date:</strong> {formatDate(sighting.created_at)}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>No Sightings Available</div>
+          )}
+        </div>
+      )}
       {isPopupOpen && selectedSighting && (
         <SightingPopup sighting={selectedSighting} onClose={handleClosePopup} />
       )}

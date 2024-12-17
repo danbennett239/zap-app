@@ -24,7 +24,7 @@
     padding: 20px;
     width: 90%;
     min-height: 50vh;
-    max-height: 80vh;;
+    max-height: 80vh;
     max-width: 900px;
     position: relative;
     border-radius: 10px;
@@ -37,21 +37,31 @@
     overflow-y: auto;
   }
   
-  /* Close Button */
+
   .close-btn {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 30px;
-    background: none;
+    background: #a87e5a; /* Deep sandy brown */
+    color: #fff; /* White text */
     border: none;
-    color: #5a3e2b; /* Dark brown */
+    font-size: 16px;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 0.3s;
   }
   
   /* Close Button Hover Effect */
   .close-btn:hover {
-    color: #8c6b4f; /* Muted brown */
+    opacity: 0.8;
   }
   
   /* Popup Grid Layout */

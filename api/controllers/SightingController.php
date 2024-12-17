@@ -41,6 +41,14 @@ class SightingController {
     
 
     public function getSightingById($id) {
+        
+        if (!filter_var($id, FILTER_VALIDATE_INT)) {
+            return ResponseHelper::jsonResponse([
+                'message' => 'error',
+                'error' => 'The ID must be a valid integer.'
+            ], 400);
+        }
+
         // Sanitize the ID
         $id = (int)$id;
 
@@ -58,30 +66,99 @@ class SightingController {
         // Decode input data
         $data = json_decode(file_get_contents("php://input"), true);
 
-        // Validate and sanitize input data
+        $errors = [];
+
+        // Validate status
+        if (empty($data['status'])) {
+            $errors[] = 'status is required';
+        } elseif (!in_array($data['status'], ['Alive', 'Dead'])) {
+            $errors[] = 'status must be either "Alive" or "Dead"';
+        }
+
+        // Check latitude (either in "location" or standalone field)
+        $latitude = $data['location']['latitude'] ?? $data['latitude'] ?? null;
+        if (empty($latitude)) {
+            $errors[] = 'latitude is required';
+        } elseif (!is_numeric($latitude) || $latitude < -90 || $latitude > 90) {
+            $errors[] = 'latitude must be a valid number between -90 and 90';
+        } else {
+            $data['latitude'] = $latitude; // Normalize
+        }
+
+        // Check longitude (either in "location" or standalone field)
+        $longitude = $data['location']['longitude'] ?? $data['longitude'] ?? null;
+        if (empty($longitude)) {
+            $errors[] = 'longitude is required';
+        } elseif (!is_numeric($longitude) || $longitude < -180 || $longitude > 180) {
+            $errors[] = 'longitude must be a valid number between -180 and 180';
+        } else {
+            $data['longitude'] = $longitude; // Normalize
+        }
+
+        // Return errors if any
+        if (!empty($errors)) {
+            return ResponseHelper::jsonResponse([
+                'message' => 'error',
+                'errors' => $errors
+            ], 400);
+        }
+
+        // Sanitize and validate the input
         $data = $this->sanitizeSightingData($data);
 
+        // Process the request
         $sightingModel = new SightingModel();
-        $result = $sightingModel->createSighting($data);
+        $insertedId = $sightingModel->createSighting($data);
 
-        if ($result) {
-            return ResponseHelper::jsonResponse(['message' => 'Sighting created successfully'], 201);
+        if ($insertedId) {
+            return ResponseHelper::jsonResponse([
+                'message' => 'success',
+                'sightingId' => (int)$insertedId
+            ], 201);
         } else {
-            return ResponseHelper::jsonResponse(['error' => 'Failed to create sighting'], 500);
+            return ResponseHelper::jsonResponse([
+                'message' => 'error',
+                'sightingId' => null
+            ], 500);
         }
     }
 
-    private function sanitizeSightingData($data) {
-        // Sanitize each field
-        $data['photo'] = htmlspecialchars($data['photo'] ?? '', ENT_QUOTES, 'UTF-8');
-        $data['location']['latitude'] = filter_var($data['location']['latitude'] ?? null, FILTER_VALIDATE_FLOAT);
-        $data['location']['longitude'] = filter_var($data['location']['longitude'] ?? null, FILTER_VALIDATE_FLOAT);
-        $data['status'] = htmlspecialchars($data['status'] ?? '', ENT_QUOTES, 'UTF-8');
-        $data['mortalityType'] = htmlspecialchars($data['mortalityType'] ?? '', ENT_QUOTES, 'UTF-8');
-        $data['metadata']['fenceType'] = htmlspecialchars($data['metadata']['fenceType'] ?? '', ENT_QUOTES, 'UTF-8');
-        $data['metadata']['roadType'] = htmlspecialchars($data['metadata']['roadType'] ?? '', ENT_QUOTES, 'UTF-8');
-        $data['additionalNotes'] = htmlspecialchars($data['additionalNotes'] ?? '', ENT_QUOTES, 'UTF-8');
 
+    private function sanitizeSightingData($data) {
+        // Sanitize photo
+        $data['photo'] = htmlspecialchars($data['photo'] ?? '', ENT_QUOTES, 'UTF-8');
+    
+        // Handle latitude and longitude (from 'location' or standalone fields)
+        $latitude = $data['location']['latitude'] ?? $data['latitude'] ?? null;
+        $longitude = $data['location']['longitude'] ?? $data['longitude'] ?? null;
+    
+        $data['latitude'] = filter_var($latitude, FILTER_VALIDATE_FLOAT);
+        $data['longitude'] = filter_var($longitude, FILTER_VALIDATE_FLOAT);
+    
+        // Normalize location
+        $data['location']['latitude'] = $data['latitude'];
+        $data['location']['longitude'] = $data['longitude'];
+    
+        // Handle mortalityType (mortality_type) sanitization
+        $data['mortalityType'] = htmlspecialchars(
+            $data['mortalityType'] ?? $data['mortality_type'] ?? '', 
+            ENT_QUOTES, 
+            'UTF-8'
+        );
+    
+        // Handle fenceType (fence_type) sanitization
+        $fenceType = $data['metadata']['fenceType'] ?? $data['metadata']['fence_type'] ?? $data['fenceType'] ?? $data['fence_type'] ?? '';
+        $data['metadata']['fenceType'] = htmlspecialchars($fenceType, ENT_QUOTES, 'UTF-8');
+    
+        // Handle roadType (road_type) sanitization
+        $roadType = $data['metadata']['roadType'] ?? $data['metadata']['road_type'] ?? $data['roadType'] ?? $data['road_type'] ?? '';
+        $data['metadata']['roadType'] = htmlspecialchars($roadType, ENT_QUOTES, 'UTF-8');
+    
+        // Handle additionalNotes (additional_notes) sanitization
+        $additionalNotes = $data['additionalNotes'] ?? $data['additional_notes'] ?? '';
+        $data['additionalNotes'] = htmlspecialchars($additionalNotes, ENT_QUOTES, 'UTF-8');
+    
         return $data;
     }
+    
 }

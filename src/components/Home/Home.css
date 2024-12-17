@@ -1,7 +1,9 @@
 .home-container {
   position: relative;
+  background:linear-gradient(to bottom, #f5e8c7, #e8d8b9);
 }
 
+/* Create Sighting Button */
 .home-create-sighting-btn {
   padding: 10px 15px;
   margin: 20px 0;
@@ -15,10 +17,16 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
+.home-create-sighting-btn:hover {
+  background-color: #c8a678; /* Muted sandy brown */
+  transform: scale(1.05);
+}
+
 .home-view-switcher {
   margin-bottom: 20px;
 }
 
+/* Modal Overlay */
 .home-modal-overlay {
   position: fixed;
   top: 0;
@@ -34,36 +42,37 @@
   -webkit-backdrop-filter: blur(1px);
 }
 
-/* Modal content */
+/* Modal Content */
 .home-modal-content {
-  background: #fff;
+  background: #f4efe3; /* Light sandy background */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  max-width: 500px; /* Set a maximum width */
-  max-height: 80vh; /* Set a maximum height to fit within the viewport */
+  box-shadow: 0 5px 15px rgba(90, 62, 43, 0.3); /* Muted dark brown shadow */
+  max-width: 500px;
+  max-height: 80vh;
   width: 90%;
-  overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+  overflow-y: auto;
   position: relative;
+  color: #5a3e2b; /* Dark brown text */
 }
 
-/* Optional: Add smooth scrolling for better user experience */
+/* Smooth Scrolling for Modal */
 .home-modal-content::-webkit-scrollbar {
   width: 6px;
 }
 
 .home-modal-content::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #d2b48c; /* Sandy brown */
   border-radius: 4px;
 }
 
-/* Close button */
+/* Close Button */
 .home-close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: red; /* Red background */
-  color: white; /* White text color */
+  background: #a87e5a; /* Deep sandy brown */
+  color: #fff; /* White text */
   border: none;
   font-size: 16px;
   font-weight: bold;
@@ -76,29 +85,32 @@
   justify-content: center;
   padding: 0;
   opacity: 1;
+  transition: opacity 0.3s;
 }
 
 .home-close-btn:hover {
-  opacity: 0.8; /* Slight transparency on hover */
+  opacity: 0.8;
 }
 
+/* View Switcher Buttons */
 .home-view-switcher button {
   padding: 10px 15px;
   margin: 5px;
-  border: 1px solid #ddd;
-  background-color: #f4f4f4;
+  border: 1px solid #d2b48c; /* Sandy border */
+  background-color: #f4efe3; /* Light sandy background */
+  color: #5a3e2b; /* Dark brown text */
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .home-view-switcher button:hover {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #c8a678; /* Muted sandy brown */
+  color: #fff; /* White text */
 }
 
 .home-view-switcher button.active-view {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #0056b3;
+  background-color: #a87e5a; /* Deep sandy brown */
+  color: #fff; /* White text */
+  border-color: #5a3e2b; /* Dark brown border */
 }

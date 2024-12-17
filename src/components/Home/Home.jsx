@@ -11,7 +11,9 @@ const Home = () => {
 
 
   const handleSightingCreation = () => {
-    setRefreshView((prev) => !prev); // Refresh the current view
+    if (navigator.onLine) {
+      setRefreshView((prev) => !prev); // Refresh the current view
+    }
     closeModal();
   };
 

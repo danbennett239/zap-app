@@ -41,13 +41,17 @@ const ListView = ({
           <span onClick={() => handleSort('additional_notes')}>
             Additional Notes
           </span>
-          {!locationError && (
-            <span onClick={() => handleSort('distance')}>Distance</span>
-          )}
+          {!locationError && <span>Distance</span>}
           <span onClick={() => handleSort('created_at')}>Spotted date</span>
         </div>
+
         {loading ? (
-          <div>Loading...</div>
+          <div className="loading-container">
+            <img src="loading.gif" alt="Loading..."></img>
+          </div>
+        ) : !navigator.onLine ? (
+          // Offline scenario
+          <div>No Sightings Available While Offline</div>
         ) : sightings?.length ? (
           sightings.map((sighting) => (
             <div

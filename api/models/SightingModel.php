@@ -109,26 +109,10 @@ class SightingModel
     $stmt->bindParam(':fence_type', $data['metadata']['fenceType']);
     $stmt->bindParam(':road_type', $data['metadata']['roadType']);
     $stmt->bindParam(':additional_notes', $data['additionalNotes']);
-    return $stmt->execute();
-  }
-
-
-  public function updateSighting($id, $data)
-  {
-    $sql = "UPDATE sightings SET status = COALESCE(:status, status),
-                                    mortality_type = COALESCE(:mortality_type, mortality_type),
-                                    fence_type = COALESCE(:fence_type, fence_type),
-                                    road_type = COALESCE(:road_type, road_type),
-                                    additional_notes = COALESCE(:additional_notes, additional_notes),
-                                    updated_at = CURRENT_TIMESTAMP
-                WHERE id = :id";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->bindParam(':status', $data['status']);
-    $stmt->bindParam(':mortality_type', $data['mortality_type']);
-    $stmt->bindParam(':fence_type', $data['fence_type']);
-    $stmt->bindParam(':road_type', $data['road_type']);
-    $stmt->bindParam(':additional_notes', $data['additional_notes']);
-    return $stmt->execute();
+    if ($stmt->execute()) {
+      return $this->db->lastInsertId();
+    } else {
+      return false;
+    }
   }
 }

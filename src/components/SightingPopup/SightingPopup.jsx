@@ -25,7 +25,7 @@ const SightingPopup = ({ sighting, onClose }) => {
       >
         {/* Close Button */}
         <button className="close-btn" onClick={onClose} aria-label="Close">
-          &times;
+          X
         </button>
 
         {/* Popup Content */}

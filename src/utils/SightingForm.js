@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 const SUPPORTED_FILE_FORMATS = ['image/jpeg', 'image/png', 'image/jpg'];
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 const getMimeTypeFromBase64 = (base64String) => {
     const mimeTypeMatch = base64String.match(/^data:(image\/[a-zA-Z]+);base64,/);
@@ -26,7 +26,7 @@ export const sightingValidationSchema = Yup.object().shape({
                 return SUPPORTED_FILE_FORMATS.includes(mimeType);
             }
         )
-        .test('fileSize', 'File size exceeds 50MB', (value) => {
+        .test('fileSize', 'File size exceeds 10 MB', (value) => {
             if (!value) return false;
             const fileSize = getFileSizeInBytes(value);
             return fileSize <= MAX_FILE_SIZE;

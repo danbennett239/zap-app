@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 
 const SightingViewController = ({ refreshTrigger }) => {
   // View Selection
-  const [selectedView, setSelectedView] = useState('card');
+  const [selectedView, setSelectedView] = useState(
+    localStorage.getItem('selectedView') || 'card');
 
   // Pagination
   const [limit, setLimit] = useState(10);
@@ -27,6 +28,15 @@ const SightingViewController = ({ refreshTrigger }) => {
 
   // Fetch data from the API
   const fetchSightings = async () => {
+    // Check if online before making API calls
+    if (!navigator.onLine) {
+      // Offline scenario: Do not call API and do not show error toasts.
+      setLoading(false);
+      setSightings([]);
+      setTotalPages(0);
+      return;
+    }
+
     try {
       setLoading(true);
       const listSighting = await listSightings(
@@ -39,7 +49,10 @@ const SightingViewController = ({ refreshTrigger }) => {
       setSightings(listSighting.sightings);
       setTotalPages(Math.ceil(listSighting.totalCount / limit));
     } catch (error) {
-      toast.error(`Error fetching sightings: ${error.message || 'Unknown error'}`)
+      // Only show error if online (check again to avoid race conditions)
+      if (navigator.onLine) {
+        toast.error(`Error fetching sightings: ${error.message || 'Unknown error'}`)
+      }
       console.error('Error fetching sightings:', error);
     } finally {
       setLoading(false);
@@ -55,7 +68,6 @@ const SightingViewController = ({ refreshTrigger }) => {
     setOffset(0);
     fetchSightings();
   }, [refreshTrigger]);
-
 
   // Handle pagination size change
   const handlePageSizeChange = (newLimit) => {
@@ -100,6 +112,7 @@ const SightingViewController = ({ refreshTrigger }) => {
   // Handle View Change
   const handleViewChange = (view) => {
     setSelectedView(view);
+    localStorage.setItem('selectedView', view);
   };
 
   return (
