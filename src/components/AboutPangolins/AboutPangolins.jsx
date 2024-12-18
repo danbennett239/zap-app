@@ -22,11 +22,6 @@ const AboutPangolins = () => {
             about their importance in maintaining biodiversity.
           </p>
         </div>
-        <div className="about-images">
-          {/* Placeholder for images */}
-          <div className="image-placeholder">Image 1</div>
-          <div className="image-placeholder">Image 2</div>
-        </div>
       </div>
 
       <div className="about-sources">

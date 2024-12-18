@@ -1,8 +1,6 @@
 import React from 'react';
 import './SightingPopup.css';
 
-// TODO on wide images fix X button overlapping
-
 const SightingPopup = ({ sighting, onClose }) => {
   // Format date function
   const formatDate = (dateString) => {

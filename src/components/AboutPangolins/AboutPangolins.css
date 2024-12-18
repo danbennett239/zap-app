@@ -1,7 +1,7 @@
 /* Container styling */
 .about-pangolins-container {
     padding: 20px;
-    background: linear-gradient(to bottom, #f5e8c7, #e8d8b9); /* Sandy gradient */
+    background: linear-gradient(to bottom, #f5e8c7, #e8d8b9);
     color: var(--text-color-dark);
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
@@ -47,7 +47,7 @@
     width: 100%;
     max-width: 400px;
     height: 200px;
-    background: #e6d8b9; /* Light sandy placeholder */
+    background: #e6d8b9;
     border: 1px solid var(--text-color-dark);
     display: flex;
     align-items: center;

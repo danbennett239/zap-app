@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PhotoUpload from './PhotoUpload';
-import PhotoCapture from './PhotoCapture';
+import PhotoUpload from '../PhotoUpload/PhotoUpload';
+import PhotoCapture from '../PhotoCapture/PhotoCapture';
 
 const PhotoOptions = ({ setPhoto, setShowPhotoOptions }) => {
   const [option, setOption] = useState(null);

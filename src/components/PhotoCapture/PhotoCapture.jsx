@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import useMediaDevice from '../hooks/useMediaDevice';
+import useMediaDevice from '../../hooks/useMediaDevice';
 
 const PhotoCapture = ({ setPhoto, setShowPhotoOptions }) => {
 

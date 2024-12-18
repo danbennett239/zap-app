@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import useGeoLocation from '../hooks/useGeoLocation';
-import PhotoOptions from './PhotoOptions';
-import MortalitySelect from './MortalitySelect';
-import { createSighting } from '../utils/api/sightingAPI.js';
-import { sightingValidationSchema } from '../utils/SightingForm.js';
+import useGeoLocation from '../../hooks/useGeoLocation.js';
+import PhotoOptions from '../PhotoOptions/PhotoOptions';
+import MortalitySelect from '../MortalitySelect/MortalitySelect';
+import { createSighting } from '../../utils/api/sightingAPI.js';
+import { sightingValidationSchema } from '../../utils/SightingForm.js';
 import './SightingForm.css';
 
 const SightingForm = ({ handleSightingCreation }) => {

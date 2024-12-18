@@ -1,7 +1,7 @@
 /* Container styling */
 .api-docs {
   padding: 20px;
-  background: linear-gradient(to bottom, #f5e8c7, #e8d8b9); /* Sandy gradient */
+  background: linear-gradient(to bottom, #f5e8c7, #e8d8b9);
   color: var(--text-color-dark);
   font-family: 'Arial', sans-serif;
   min-height: 100vh;
@@ -18,10 +18,9 @@
 
 /* Section styling */
 .api-docs section {
-  background: rgba(229, 217, 189, 0.8); /* Light sandy background */
+  background: rgba(229, 217, 189, 0.8);
   padding: 20px;
   border-radius: 8px;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   margin-bottom: 30px;
 }
 
@@ -29,14 +28,14 @@
 .api-docs h2 {
   font-size: 1.8rem;
   margin-bottom: 15px;
-  border-bottom: 2px solid #d2b48c; /* Sandy border */
+  border-bottom: 2px solid #d2b48c;
   padding-bottom: 10px;
 }
 
 .api-docs h3 {
   font-size: 1.5rem;
   margin: 20px 0 10px;
-  color: #7f5f3c; /* Muted brown */
+  color: #7f5f3c;
 }
 
 .api-docs h4 {
@@ -69,31 +68,31 @@
 
 /* Code block styling */
 .api-docs code {
-  background-color: #fff8e1; /* Light sandy background for code */
+  background-color: #fff8e1;
   padding: 2px 4px;
   border-radius: 4px;
   font-family: 'Courier New', Courier, monospace;
-  color: #3e2723; /* Dark brown code text */
+  color: #3e2723;
 }
 
 .api-docs pre {
   background-color: #fff8e1;
   padding: 15px;
-  border-left: 4px solid #d2b48c; /* Sandy border */
+  border-left: 4px solid #d2b48c;
   overflow-x: auto;
-  margin: 20px auto; /* Center the block */
+  margin: 20px auto;
   font-size: 1rem;
   border-radius: 4px;
-  max-width: 33%; /* Restrict to the middle third of the screen */
+  max-width: 33%;
   text-align: left;
-  box-sizing: border-box; /* Ensure padding and border are included in width */
+  box-sizing: border-box;
 }
 
 .api-docs pre code {
   background-color: transparent;
   padding: 0;
-  white-space: pre-wrap; /* Ensure long lines wrap */
-  word-wrap: break-word; /* Handle word breaks properly */
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* Button and link styling */
@@ -132,37 +131,36 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  background: #fff8e1; /* Light sandy background for tables */
+  background: #fff8e1;
   border-radius: 8px;
-  overflow: hidden; /* To apply border-radius to the entire table */
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  overflow: hidden;
 }
 
 .query-table th,
 .query-table td {
   text-align: left;
   padding: 10px 15px;
-  border: 1px solid #d2b48c; /* Sandy border */
+  border: 1px solid #d2b48c;
   font-size: 1rem;
-  color: #3e2723; /* Dark brown text */
+  color: #3e2723;
 }
 
 .query-table th {
-  background: #d2b48c; /* Sandy brown header background */
-  color: #fff; /* White header text */
+  background: #d2b48c;
+  color: #fff;
   font-weight: bold;
 }
 
 .query-table tbody tr:nth-child(odd) {
-  background: rgba(255, 248, 225, 0.7); /* Light sandy alternate row background */
+  background: rgba(255, 248, 225, 0.7);
 }
 
 .query-table tbody tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.7); /* White alternate row background */
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .query-table tbody tr:hover {
-  background: rgba(210, 180, 140, 0.3); /* Light sandy hover background */
+  background: rgba(210, 180, 140, 0.3);
   transition: background 0.3s ease;
 }
 
@@ -194,8 +192,8 @@
   }
 
   .api-docs pre {
-    max-width: 100%; /* Allow full width on smaller screens */
-    margin: 20px 0; /* Remove horizontal centering */
+    max-width: 100%;
+    margin: 20px 0;
   }
   .query-table th,
   .query-table td {

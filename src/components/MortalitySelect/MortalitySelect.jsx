@@ -1,5 +1,5 @@
 import React from 'react';
-import { MORTALITY_OPTIONS } from '../utils/mortalityOptions';
+import { MORTALITY_OPTIONS } from '../../utils/mortalityOptions';
 
 const MortalitySelect = ({ value, onChange }) => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SightingForm from '../SightingForm';
+import SightingForm from '../SightingForm/SightingForm';
 import SightingViewController from '../SightingViewController/SightingViewController';
 import './Home.css';
 

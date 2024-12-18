@@ -18,7 +18,7 @@ module.exports = {
 			backgroundSync: {
 			  name: 'apiQueue',
 			  options: {
-				maxRetentionTime: 24 * 60, // Retry for up to 24 hours (in minutes)
+				maxRetentionTime: 72 * 60, // Retry for up to 24 hours (in minutes)
 			  },
 			},
 		  },

@@ -48,6 +48,8 @@ export const sightingValidationSchema = Yup.object().shape({
     location: Yup.object().shape({
         latitude: Yup.number()
             .typeError('Latitude must be a number')
+            .min(-90, 'Latitude must be between -90 and 90')
+            .max(90, 'Latitude must be between -90 and 90')
             .when('locationError', {
                 is: true,
                 then: () => Yup.number().required('Latitude is required'),
@@ -55,6 +57,8 @@ export const sightingValidationSchema = Yup.object().shape({
             }),
         longitude: Yup.number()
             .typeError('Longitude must be a number')
+            .min(-180, 'Longitude must be between -180 and 180')
+            .max(180, 'Longitude must be between -180 and 180')
             .when('locationError', {
                 is: true,
                 then: () => Yup.number().required('Longitude is required'),
